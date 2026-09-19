@@ -1,0 +1,40 @@
+.service-strip {
+  background: var(--tz-dark-green);
+  padding: 1.1rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.strip-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  animation: strip-scroll 28s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+
+.strip-item {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+
+  &:hover { color: var(--tz-lime); }
+}
+
+.strip-sep {
+  color: var(--tz-lime);
+  font-size: 0.6rem;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+@keyframes strip-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}

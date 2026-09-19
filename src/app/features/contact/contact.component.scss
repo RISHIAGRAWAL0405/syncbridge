@@ -1,0 +1,203 @@
+.contact-page { padding-top: var(--nav-height); min-height: 100vh; }
+
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: calc(100vh - var(--nav-height));
+
+  @media (max-width: 900px) { grid-template-columns: 1fr; }
+}
+
+// ─── Info ─────────────────────────────────────────────────────────────────────
+.contact-info {
+  background: var(--color-bg-2);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  padding: 5rem clamp(2rem, 6vw, 5rem);
+
+  @media (max-width: 900px) { padding: 4rem clamp(1.5rem, 5vw, 3rem); }
+}
+
+.contact-info-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 480px;
+}
+
+.contact-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  em { font-style: italic; color: var(--color-accent); }
+}
+
+.contact-desc {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.contact-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.detail-label {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.detail-value {
+  font-size: 0.9rem;
+  color: var(--color-secondary);
+  transition: color 0.3s ease;
+
+  a:hover & { color: var(--color-accent); }
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1.75rem;
+  background: #25D366;
+  color: white;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  border-radius: 2px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  width: fit-content;
+
+  &:hover { background: #1ebe5d; transform: translateY(-2px); }
+}
+
+// ─── Form ─────────────────────────────────────────────────────────────────────
+.contact-form-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem clamp(2rem, 6vw, 5rem);
+
+  @media (max-width: 900px) { padding: 4rem clamp(1.5rem, 5vw, 3rem); }
+}
+
+.contact-form {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-title {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 560px) { grid-template-columns: 1fr; }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  input, select, textarea {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-secondary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    padding: 0.875rem 1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+    resize: vertical;
+
+    &::placeholder { color: var(--color-text-muted); }
+    &:focus { border-color: var(--color-accent); }
+
+    option { background: var(--color-bg); }
+  }
+}
+
+.form-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 1.1rem;
+  font-size: 0.8rem;
+
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}
+
+// ─── Success ──────────────────────────────────────────────────────────────────
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  animation: successIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: var(--color-accent);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.form-success h3 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--color-secondary);
+}
+
+.form-success p {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  max-width: 300px;
+}

@@ -1,0 +1,20 @@
+<section class="showreel" aria-label="Studio showreel">
+  <div class="showreel-video-wrap">
+    <video #showreelVideo autoplay muted loop playsinline (play)="isPlaying.set(true)" (pause)="isPlaying.set(false)" poster="https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=85">
+      <source src="https://videos.pexels.com/video-files/3129595/3129595-hd_1920_1080_25fps.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="showreel-wash" aria-hidden="true"></div>
+  <div class="showreel-content container">
+    <div class="showreel-copy reveal">
+      <span class="section-label">The moving image</span>
+      <h2>Moments that<br><em>move with you.</em></h2>
+      <p>Still photography with the pulse of cinema—made for the milestones you want to relive.</p>
+    </div>
+    <button type="button" class="showreel-play" (click)="toggleVideo()" [attr.aria-label]="isPlaying() ? 'Pause showreel' : 'Play showreel'">
+      <span class="play-ring">{{ isPlaying() ? 'II' : '▶' }}</span>
+      <span>{{ isPlaying() ? 'Pause showreel' : 'Play showreel' }}</span>
+    </button>
+    <div class="showreel-meta" aria-hidden="true"><span>04:12</span><span>Motion studies / 2026</span></div>
+  </div>
+</section>

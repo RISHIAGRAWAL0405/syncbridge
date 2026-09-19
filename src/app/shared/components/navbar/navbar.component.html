@@ -1,0 +1,97 @@
+@if (!isAdminRoute) {
+  <!-- Top Contact Bar -->
+  <div class="top-bar" role="banner">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <a href="tel:+919377697676" class="top-bar-item" aria-label="Call Sync Bridge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91-9377697676
+        </a>
+        <a href="mailto:info@syncbridge.in" class="top-bar-item" aria-label="Email Sync Bridge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info&#64;syncbridge.in
+        </a>
+        <span class="top-bar-item top-bar-location">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ahmedabad · Surat · Vadodara · Rajkot
+        </span>
+      </div>
+      <div class="top-bar-right">
+        <a href="https://www.facebook.com/syncbridge" target="_blank" rel="noopener" class="top-bar-social" aria-label="Sync Bridge on Facebook">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/syncbridge" target="_blank" rel="noopener" class="top-bar-social" aria-label="Sync Bridge on Instagram">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/syncbridge" target="_blank" rel="noopener" class="top-bar-social" aria-label="Sync Bridge on LinkedIn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="https://twitter.com/syncbridge" target="_blank" rel="noopener" class="top-bar-social" aria-label="Sync Bridge on Twitter">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <nav class="navbar" [class.scrolled]="scrolled()" [class.menu-open]="menuOpen()" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <!-- Logo -->
+      <a routerLink="/" class="nav-logo" (click)="closeMenu()" aria-label="Sync Bridge Home">
+        <span class="logo-tz">SYNC</span><span class="logo-zone"> BRIDGE</span>
+      </a>
+
+      <!-- Desktop Links -->
+      <ul class="nav-links" role="list">
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: link.path === '/'}" class="nav-link">
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <!-- CTA -->
+      <div class="nav-actions">
+        <a routerLink="/contact" class="nav-cta" (click)="closeMenu()">
+          Start a Project
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+
+        <!-- Hamburger -->
+        <button class="hamburger" [class.active]="menuOpen()" (click)="toggleMenu()"
+                [attr.aria-expanded]="menuOpen()" aria-label="Toggle navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" [class.open]="menuOpen()" role="dialog" aria-modal="true" aria-label="Navigation menu">
+      <div class="mobile-menu-content">
+        <ul class="mobile-links" role="list">
+          @for (link of navLinks; track link.path; let i = $index) {
+            <li [style.--i]="i">
+              <a [routerLink]="link.path" routerLinkActive="active" [routerLinkActiveOptions]="{exact: link.path === '/'}"
+                 class="mobile-link" (click)="closeMenu()">
+                <span class="mobile-link-num">0{{ i + 1 }}</span>
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+        <div class="mobile-footer">
+          <a routerLink="/contact" class="nav-cta" (click)="closeMenu()">
+            Start a Project
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <div class="mobile-contact">
+            <a href="tel:+919377697676">+91-9377697676</a>
+            <a href="mailto:info@syncbridge.in">info&#64;syncbridge.in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+}

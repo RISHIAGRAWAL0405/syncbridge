@@ -1,0 +1,51 @@
+<section class="about-intro" aria-label="About Sync Bridge">
+  <div class="container">
+    <div class="about-inner">
+      <!-- Image Collage -->
+      <div class="about-images reveal">
+        <div class="about-img-main img-mask">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80"
+               alt="Sync Bridge office" loading="lazy" width="500" height="600">
+        </div>
+        <div class="about-img-secondary img-mask">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=500&q=80"
+               alt="Sync Bridge team collaboration" loading="lazy" width="320" height="240">
+        </div>
+        <div class="about-img-stat">
+          <span class="about-stat-num">17+</span>
+          <span class="about-stat-label">Years of<br>Excellence</span>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="about-text">
+        <span class="tz-eyebrow tz-eyebrow-dark reveal">About Sync Bridge</span>
+        <h2 class="tz-section-title reveal reveal-delay-1">
+          A Full-Service Agency<br>Built for Growth.
+        </h2>
+        <p class="about-desc reveal reveal-delay-2">
+          Sync Bridge is a full-service advertising and digital marketing agency with over 17 years of experience helping brands across India grow, connect and lead in their markets.
+        </p>
+        <p class="about-desc reveal reveal-delay-3">
+          From strategy and branding to digital marketing, web development and video production — we bring together creative thinking and data-driven execution to deliver campaigns that make a real impact.
+        </p>
+
+        <div class="about-capabilities reveal reveal-delay-3">
+          @for (cap of capabilities; track cap) {
+            <span class="capability-tag">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ cap }}
+            </span>
+          }
+        </div>
+
+        <div class="about-actions reveal reveal-delay-4">
+          <a routerLink="/about" class="tz-btn-lime">
+            Know More About Us
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

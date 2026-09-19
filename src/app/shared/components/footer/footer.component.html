@@ -1,0 +1,104 @@
+@if (!isAdminRoute) {
+<footer class="footer" aria-label="Site footer">
+  <!-- CTA Band -->
+  <div class="footer-cta-band">
+    <div class="container">
+      <div class="footer-cta-inner">
+        <div class="footer-cta-text">
+          <h2>Let's Create History Together.</h2>
+          <p>Start a story with Sync Bridge.</p>
+        </div>
+        <div class="footer-cta-actions">
+          <a routerLink="/contact" class="tz-btn-lime">
+            Start a Project
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="tel:+919377697676" class="tz-btn-outline-white">Talk to Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a routerLink="/" class="footer-logo" aria-label="Sync Bridge Home">
+            <span class="logo-tz">SYNC</span><span class="logo-zone"> BRIDGE</span>
+          </a>
+          <p class="footer-desc">A full-service advertising and digital marketing agency combining strategy, creativity and technology to help brands grow and make an impact.</p>
+          <div class="footer-social">
+            <a href="https://www.facebook.com/syncbridge" target="_blank" rel="noopener" class="social-icon" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/syncbridge" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/syncbridge" target="_blank" rel="noopener" class="social-icon" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a href="https://twitter.com/syncbridge" target="_blank" rel="noopener" class="social-icon" aria-label="Twitter / X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Quick Links</h3>
+          <ul>
+            @for (link of quickLinks; track link.path) {
+              <li><a [routerLink]="link.path" class="footer-link">{{ link.label }}</a></li>
+            }
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Services</h3>
+          <ul>
+            @for (link of serviceLinks; track link.label) {
+              <li><a [routerLink]="link.path" class="footer-link">{{ link.label }}</a></li>
+            }
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h3 class="footer-col-title">Get In Touch</h3>
+          <div class="footer-contact">
+            <a href="tel:+919377697676" class="footer-contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.8a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              +91-9377697676
+            </a>
+            <a href="mailto:info@syncbridge.in" class="footer-contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              info&#64;syncbridge.in
+            </a>
+            <div class="footer-offices">
+              @for (office of offices; track office.city) {
+                <div class="footer-office">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  {{ office.city }}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <p class="footer-copy">&copy; {{ year }} Sync Bridge. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#" class="footer-link">Privacy Policy</a>
+          <a href="#" class="footer-link">Legal Disclaimer</a>
+          <a href="#" class="footer-link">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+}

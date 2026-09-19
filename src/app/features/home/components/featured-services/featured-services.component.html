@@ -1,0 +1,39 @@
+<section class="featured-services" aria-label="Featured services">
+  <div class="container">
+    <div class="fs-header reveal">
+      <span class="tz-eyebrow">Our Expertise</span>
+      <h2 class="tz-section-title tz-section-title-white reveal reveal-delay-1">
+        Grow Your Brand<br>With Our Expertise.
+      </h2>
+      <p class="fs-sub reveal reveal-delay-2">
+        From performance marketing to brand building — we deliver measurable results across every channel.
+      </p>
+    </div>
+
+    <div class="fs-grid">
+      @for (svc of featured; track svc.id; let i = $index) {
+        <a routerLink="/services" class="fs-card reveal" [class]="'reveal-delay-' + (i + 1)">
+          <div class="fs-card-img img-mask">
+            <img [src]="svc.image" [alt]="svc.title" loading="lazy" width="600" height="360">
+          </div>
+          <div class="fs-card-body">
+            <div class="fs-card-icon" [innerHTML]="svc.icon" aria-hidden="true"></div>
+            <h3 class="fs-card-title">{{ svc.title }}</h3>
+            <p class="fs-card-desc">{{ svc.description }}</p>
+            <span class="fs-card-cta">
+              Learn More
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+
+    <div class="fs-footer reveal">
+      <a routerLink="/services" class="tz-btn-lime">
+        View All Services
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

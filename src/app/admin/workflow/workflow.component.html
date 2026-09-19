@@ -1,0 +1,219 @@
+<div class="page-header d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h5 class="fw-bold mb-0">Workflow</h5>
+    <p class="text-muted small mb-0">Manage workflow steps and templates</p>
+  </div>
+</div>
+
+<div *ngIf="success" class="alert alert-success alert-dismissible py-2 small">
+  <i class="bi bi-check-circle-fill me-2"></i>{{ success }}
+  <button type="button" class="btn-close btn-close-sm" (click)="success=''"></button>
+</div>
+
+<!-- Tabs -->
+<ul class="nav nav-tabs mb-4">
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="activeTab==='steps'" (click)="activeTab='steps'">
+      <i class="bi bi-diagram-3 me-1"></i>Steps
+    </button>
+  </li>
+  <li class="nav-item">
+    <button class="nav-link" [class.active]="activeTab==='templates'" (click)="activeTab='templates'">
+      <i class="bi bi-layout-text-window me-1"></i>Templates
+    </button>
+  </li>
+</ul>
+
+<!-- Steps Tab -->
+<div *ngIf="activeTab==='steps'">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary btn-sm" (click)="openCreateStep()">
+      <i class="bi bi-plus-lg me-1"></i>Add Step
+    </button>
+  </div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Step Name</th>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let step of steps">
+              <td class="ps-4 fw-semibold small">{{ step.workflow_step_name }}</td>
+              <td><span class="badge bg-secondary-subtle text-secondary">{{ step.workflow_step_code }}</span></td>
+              <td class="small text-muted">{{ step.description || '—' }}</td>
+              <td>
+                <span class="badge" [class.bg-success-subtle]="step.is_active" [class.text-success]="step.is_active"
+                  [class.bg-danger-subtle]="!step.is_active" [class.text-danger]="!step.is_active">
+                  {{ step.is_active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="openEditStep(step)"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm" [class.btn-outline-danger]="step.is_active" [class.btn-outline-success]="!step.is_active"
+                  (click)="toggleStepStatus(step)">
+                  <i class="bi" [class.bi-toggle-on]="step.is_active" [class.bi-toggle-off]="!step.is_active"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="steps.length===0">
+              <td colspan="5" class="text-center text-muted py-4 small">No steps found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Templates Tab -->
+<div *ngIf="activeTab==='templates'">
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary btn-sm" (click)="openCreateTemplate()">
+      <i class="bi bi-plus-lg me-1"></i>Add Template
+    </button>
+  </div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Template Name</th>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tmpl of templates">
+              <td class="ps-4 fw-semibold small">{{ tmpl.workflow_template_name }}</td>
+              <td><span class="badge bg-secondary-subtle text-secondary">{{ tmpl.workflow_template_code }}</span></td>
+              <td class="small text-muted">{{ tmpl.description || '—' }}</td>
+              <td>
+                <span class="badge" [class.bg-success-subtle]="tmpl.is_active" [class.text-success]="tmpl.is_active"
+                  [class.bg-danger-subtle]="!tmpl.is_active" [class.text-danger]="!tmpl.is_active">
+                  {{ tmpl.is_active ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td class="text-end pe-4">
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="openEditTemplate(tmpl)"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm" [class.btn-outline-danger]="tmpl.is_active" [class.btn-outline-success]="!tmpl.is_active"
+                  (click)="toggleTemplateStatus(tmpl)">
+                  <i class="bi" [class.bi-toggle-on]="tmpl.is_active" [class.bi-toggle-off]="!tmpl.is_active"></i>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="templates.length===0">
+              <td colspan="5" class="text-center text-muted py-4 small">No templates found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Step Modal -->
+<div class="modal-backdrop-custom" *ngIf="showStepModal" (click)="showStepModal=false"></div>
+<div class="modal-panel card shadow-lg border-0" *ngIf="showStepModal">
+  <div class="card-header d-flex align-items-center justify-content-between py-3">
+    <h6 class="fw-bold mb-0">{{ editingStep ? 'Edit Step' : 'Add Step' }}</h6>
+    <button class="btn-close" (click)="showStepModal=false"></button>
+  </div>
+  <div class="card-body">
+    <div *ngIf="error" class="alert alert-danger py-2 small mb-3">{{ error }}</div>
+    <form [formGroup]="stepForm" (ngSubmit)="saveStep()" novalidate>
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">Step Name *</label>
+        <input type="text" class="form-control form-control-sm" formControlName="workflow_step_name"
+          [class.is-invalid]="sf['workflow_step_name'].invalid && sf['workflow_step_name'].touched">
+        <div class="invalid-feedback">Required</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">Step Code *</label>
+        <input type="text" class="form-control form-control-sm" formControlName="workflow_step_code"
+          [class.is-invalid]="sf['workflow_step_code'].invalid && sf['workflow_step_code'].touched">
+        <div class="invalid-feedback">Required</div>
+      </div>
+      <div class="mb-4">
+        <label class="form-label small fw-semibold">Description</label>
+        <textarea class="form-control form-control-sm" formControlName="description" rows="2"></textarea>
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="showStepModal=false">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+          <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Template Modal -->
+<div class="modal-backdrop-custom" *ngIf="showTemplateModal" (click)="showTemplateModal=false"></div>
+<div class="modal-panel modal-panel-lg card shadow-lg border-0" *ngIf="showTemplateModal">
+  <div class="card-header d-flex align-items-center justify-content-between py-3">
+    <h6 class="fw-bold mb-0">{{ editingTemplate ? 'Edit Template' : 'Add Template' }}</h6>
+    <button class="btn-close" (click)="showTemplateModal=false"></button>
+  </div>
+  <div class="card-body overflow-auto">
+    <div *ngIf="error" class="alert alert-danger py-2 small mb-3">{{ error }}</div>
+    <form [formGroup]="templateForm" (ngSubmit)="saveTemplate()" novalidate>
+      <div class="row g-3 mb-3">
+        <div class="col-8">
+          <label class="form-label small fw-semibold">Template Name *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="workflow_template_name"
+            [class.is-invalid]="tf['workflow_template_name'].invalid && tf['workflow_template_name'].touched">
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-4">
+          <label class="form-label small fw-semibold">Code *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="workflow_template_code"
+            [class.is-invalid]="tf['workflow_template_code'].invalid && tf['workflow_template_code'].touched">
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-semibold">Description</label>
+          <textarea class="form-control form-control-sm" formControlName="description" rows="2"></textarea>
+        </div>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <label class="form-label small fw-semibold mb-0">Steps</label>
+        <button type="button" class="btn btn-sm btn-outline-primary" (click)="addTemplateStep()">
+          <i class="bi bi-plus-lg me-1"></i>Add Step
+        </button>
+      </div>
+      <div *ngFor="let ts of templateSteps; let i=index" class="d-flex align-items-center gap-2 mb-2">
+        <span class="badge bg-secondary-subtle text-secondary">{{ i+1 }}</span>
+        <select class="form-select form-select-sm flex-grow-1" [(ngModel)]="ts.workflow_step_id" [ngModelOptions]="{standalone:true}">
+          <option value="">— Select Step —</option>
+          <option *ngFor="let s of steps" [value]="s.workflow_step_id">{{ s.workflow_step_name }}</option>
+        </select>
+        <div class="form-check mb-0">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ts.is_required" [ngModelOptions]="{standalone:true}" id="req{{i}}">
+          <label class="form-check-label small" [for]="'req'+i">Required</label>
+        </div>
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeTemplateStep(i)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="showTemplateModal=false">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+          <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

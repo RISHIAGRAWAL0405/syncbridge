@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/core/constants/app.constants.ts"],
+  "sourcesContent": ["export enum UserType {\r\n  CLIENT = 'CLIENT',\r\n  USER = 'USER'\r\n}\r\n\r\nexport enum UserAuthOtpType {\r\n  RESET_PASSWORD = 'RESET_PASSWORD',\r\n  EMAIL_VERIFICATION = 'EMAIL_VERIFICATION'\r\n}\r\n\r\nexport enum OnlineStatus {\r\n  ONLINE = 'ONLINE',\r\n  AWAY = 'AWAY',\r\n  BUSY = 'BUSY',\r\n  OFFLINE = 'OFFLINE'\r\n}\r\n\r\nexport const STORAGE_KEYS = {\r\n  ACCESS_TOKEN: 'access_token',\r\n  REFRESH_TOKEN: 'refresh_token',\r\n  CURRENT_USER: 'current_user'\r\n} as const;\r\n\r\nexport const APP_TITLE = 'Sync Bridge';\r\n"],
+  "mappings": ";AAAA,IAAY;CAAZ,SAAYA,WAAQ;AAClB,EAAAA,UAAA,QAAA,IAAA;AACA,EAAAA,UAAA,MAAA,IAAA;AACF,GAHY,aAAA,WAAQ,CAAA,EAAA;AAKpB,IAAY;CAAZ,SAAYC,kBAAe;AACzB,EAAAA,iBAAA,gBAAA,IAAA;AACA,EAAAA,iBAAA,oBAAA,IAAA;AACF,GAHY,oBAAA,kBAAe,CAAA,EAAA;AAK3B,IAAY;CAAZ,SAAYC,eAAY;AACtB,EAAAA,cAAA,QAAA,IAAA;AACA,EAAAA,cAAA,MAAA,IAAA;AACA,EAAAA,cAAA,MAAA,IAAA;AACA,EAAAA,cAAA,SAAA,IAAA;AACF,GALY,iBAAA,eAAY,CAAA,EAAA;AAOjB,IAAM,eAAe;EAC1B,cAAc;EACd,eAAe;EACf,cAAc;;",
+  "names": ["UserType", "UserAuthOtpType", "OnlineStatus"]
+}

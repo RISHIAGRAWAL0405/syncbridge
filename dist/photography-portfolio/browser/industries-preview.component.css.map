@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/features/home/components/industries-preview/industries-preview.component.ts"],
+  "sourcesContent": [".industries{padding:6rem 0}.industries h2{margin:.8rem 0 2rem}.industry-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.industry-grid a{padding:1.5rem;border:1px solid var(--tz-border);border-radius:10px;display:grid;gap:.5rem}.industry-grid a>span{font-size:1.5rem}.industry-grid small{color:var(--tz-text-muted)}@media(max-width:700px){.industry-grid{grid-template-columns:1fr}}"],
+  "mappings": ";AAAA,CAAA;AAAY,WAAA,KAAA;;AAAe,CAA3B,WAA2B;AAAe,UAAA,OAAA,EAAA;;AAAoB,CAAA;AAAe,WAAA;AAAa,yBAAA,OAAA,CAAA,EAAA;AAAoC,OAAA;;AAAS,CAAzE,cAAyE;AAAiB,WAAA;AAAe,UAAA,IAAA,MAAA,IAAA;AAAkC,iBAAA;AAAmB,WAAA;AAAa,OAAA;;AAAU,CAArL,cAAqL,EAAA,EAAA;AAAsB,aAAA;;AAAiB,CAA5N,cAA4N;AAAqB,SAAA,IAAA;;AAA2B,QAAA,WAAA;AAAwB,GAApS;AAAmT,2BAAA;;;",
+  "names": []
+}

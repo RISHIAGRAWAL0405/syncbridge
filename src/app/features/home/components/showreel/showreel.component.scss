@@ -1,0 +1,33 @@
+.showreel {
+  position: relative;
+  min-height: min(74vw, 780px);
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0b0d20;
+}
+
+.showreel-video-wrap, .showreel-video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; }
+.showreel-video-wrap video { object-fit: cover; filter: saturate(.72) contrast(1.08) brightness(.68); transform: scale(1.03); }
+
+.showreel-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(5, 7, 22, .9) 0%, rgba(8, 11, 30, .5) 48%, rgba(5, 6, 17, .18) 100%), linear-gradient(0deg, rgba(5, 6, 18, .45), transparent 38%);
+}
+
+.showreel-content { position: relative; z-index: 2; min-height: min(74vw, 780px); display: flex; flex-direction: column; justify-content: center; }
+.showreel-copy { max-width: 630px; }
+.showreel-copy h2 { margin: 1.25rem 0; font-size: clamp(3rem, 7vw, 6.7rem); line-height: .94; letter-spacing: -.05em; color: #fff; }
+.showreel-copy h2 em { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.72); font-style: italic; }
+.showreel-copy p { max-width: 390px; color: rgba(255,255,255,.67); font-size: clamp(.9rem, 1.3vw, 1.05rem); }
+
+.showreel-play { position: absolute; right: clamp(1.5rem, 8vw, 8rem); top: 50%; display: flex; flex-direction: column; align-items: center; gap: .8rem; color: rgba(255,255,255,.82); font-size: .62rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.play-ring { width: 86px; height: 86px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.58); border-radius: 50%; background: rgba(255,255,255,.08); backdrop-filter: blur(10px); color: var(--color-accent-light); font-size: 1rem; transition: transform .4s var(--transition-spring), background .3s ease; }
+.showreel-play:hover .play-ring { transform: scale(1.12) rotate(8deg); background: var(--color-accent); color: #19111b; }
+.showreel-meta { position: absolute; bottom: 2rem; left: clamp(1.5rem, 5vw, 6rem); right: clamp(1.5rem, 5vw, 6rem); display: flex; justify-content: space-between; color: rgba(255,255,255,.53); font-size: .6rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+
+@media (max-width: 700px) { .showreel { min-height: 600px; } .showreel-content { min-height: 600px; } .showreel-play { position: static; align-self: flex-start; flex-direction: row; margin-top: 2.2rem; } .play-ring { width: 52px; height: 52px; } .showreel-meta { bottom: 1.25rem; } }
+@media (prefers-reduced-motion: reduce) { .showreel-video-wrap video { display: none; } }

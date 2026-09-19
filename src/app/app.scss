@@ -1,0 +1,39 @@
+.app-shell {
+  min-height: 100vh;
+  background: var(--tz-white);
+
+  &.transitioning {
+    opacity: 0.96;
+    transition: opacity 0.2s ease;
+  }
+}
+
+// ─── Floating WhatsApp ────────────────────────────────────────────────────────
+.floating-whatsapp {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 900;
+  width: 52px;
+  height: 52px;
+  background: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+  }
+
+  @media (max-width: 480px) {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 46px;
+    height: 46px;
+  }
+}

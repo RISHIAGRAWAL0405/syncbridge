@@ -1,0 +1,72 @@
+<div class="portfolio-page">
+  <!-- Header -->
+  <div class="portfolio-header">
+    <div class="container">
+      <span class="section-label reveal">Portfolio</span>
+      <h1 class="portfolio-title reveal reveal-delay-1">Visual<br><em>Stories</em></h1>
+      <p class="portfolio-sub reveal reveal-delay-2">A curated collection of our finest work across every discipline.</p>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="portfolio-filters reveal reveal-delay-3">
+    <div class="container">
+      <div class="filters-wrap" role="tablist" aria-label="Portfolio filters">
+        @for (f of filters; track f.id) {
+          <button class="filter-btn" [class.active]="activeFilter() === f.id"
+                  (click)="setFilter(f.id)" role="tab" [attr.aria-selected]="activeFilter() === f.id"
+                  (mouseenter)="cursor.setHover(true)" (mouseleave)="cursor.setHover(false)">
+            {{ f.label }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="portfolio-grid container">
+    @for (item of filtered(); track item.id; let i = $index) {
+      <div class="portfolio-item reveal" [class]="'reveal-delay-' + (i % 4 + 1)"
+           [attr.data-category]="item.category"
+           (click)="openLightbox(item)"
+           (mouseenter)="cursor.setHover(true, 'View')" (mouseleave)="cursor.setHover(false)">
+        <div class="portfolio-img-wrap img-mask">
+          <img [src]="item.image" [alt]="item.title" loading="lazy" width="900" height="600">
+        </div>
+        <div class="portfolio-item-overlay">
+          <span class="portfolio-item-cat">{{ item.category }}</span>
+          <h3 class="portfolio-item-title">{{ item.title }}</h3>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Lightbox -->
+  @if (lightboxItem()) {
+    <div class="lightbox" role="dialog" aria-modal="true" [attr.aria-label]="lightboxItem()!.title"
+         (keydown.escape)="closeLightbox()" (keydown.arrowleft)="prevItem()" (keydown.arrowright)="nextItem()" tabindex="0">
+      <div class="lightbox-backdrop" (click)="closeLightbox()"></div>
+
+      <button class="lb-close" (click)="closeLightbox()" aria-label="Close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+
+      <button class="lb-nav lb-prev" (click)="prevItem()" aria-label="Previous image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </button>
+
+      <div class="lb-content">
+        <img [src]="lightboxItem()!.image" [alt]="lightboxItem()!.title" loading="lazy">
+        <div class="lb-info">
+          <span class="lb-cat">{{ lightboxItem()!.category }}</span>
+          <h3 class="lb-title">{{ lightboxItem()!.title }}</h3>
+          <span class="lb-counter">{{ lightboxIndex() + 1 }} / {{ filtered().length }}</span>
+        </div>
+      </div>
+
+      <button class="lb-nav lb-next" (click)="nextItem()" aria-label="Next image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  }
+</div>

@@ -1,0 +1,191 @@
+<div class="page-header d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h5 class="fw-bold mb-0">Tasks</h5>
+    <p class="text-muted small mb-0">Manage project tasks and workflow schedules</p>
+  </div>
+  <button class="btn btn-primary btn-sm" (click)="openCreate()">
+    <i class="bi bi-plus-lg me-1"></i>Add Task
+  </button>
+</div>
+
+<div *ngIf="success" class="alert alert-success alert-dismissible py-2 small">
+  <i class="bi bi-check-circle-fill me-2"></i>{{ success }}
+  <button type="button" class="btn-close btn-close-sm" (click)="success=''"></button>
+</div>
+
+<div *ngIf="error && !showTaskPanel && !showSchedulePanel" class="alert alert-danger alert-dismissible py-2 small">
+  <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+  <button type="button" class="btn-close btn-close-sm" (click)="error=''"></button>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white border-bottom py-3 d-flex align-items-center justify-content-between gap-3">
+    <div class="input-group input-group-sm" style="max-width:320px">
+      <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+      <input type="text" class="form-control border-start-0 ps-0" placeholder="Search tasks..."
+        [(ngModel)]="searchTerm" [ngModelOptions]="{standalone:true}">
+    </div>
+    <span class="badge bg-secondary-subtle text-secondary">{{ filteredTasks.length }} Tasks</span>
+  </div>
+  <div class="card-body p-0">
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary spinner-border-sm"></div>
+    </div>
+    <div class="table-responsive" *ngIf="!loading">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">Task</th>
+            <th>Project</th>
+            <th>Template</th>
+            <th>Start</th>
+            <th>End</th>
+            <th class="text-end pe-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of filteredTasks">
+            <td class="ps-4">
+              <div class="fw-semibold small">{{ task.task_name }}</div>
+              <div class="text-muted" style="font-size:0.75rem">{{ task.task_code }}</div>
+            </td>
+            <td class="small text-muted">{{ task.project_name || '—' }}</td>
+            <td><span class="badge bg-info-subtle text-info">{{ task.workflow_template_name || '—' }}</span></td>
+            <td class="small text-muted">{{ task.start_date ? (task.start_date | date:'mediumDate') : '—' }}</td>
+            <td class="small text-muted">{{ task.end_date ? (task.end_date | date:'mediumDate') : '—' }}</td>
+            <td class="text-end pe-4">
+              <button class="btn btn-sm btn-outline-secondary me-1" (click)="openSchedule(task)" title="Workflow Schedule">
+                <i class="bi bi-calendar-check"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="openEdit(task)" title="Edit">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteTask(task)" [disabled]="deletingTaskId === task.task_id" title="Delete">
+                <span *ngIf="deletingTaskId === task.task_id" class="spinner-border spinner-border-sm"></span>
+                <i *ngIf="deletingTaskId !== task.task_id" class="bi bi-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredTasks.length === 0">
+            <td colspan="6" class="text-center text-muted py-4 small">No tasks found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Task Modal -->
+<div class="modal-backdrop-custom" *ngIf="showTaskPanel" (click)="showTaskPanel=false"></div>
+<div class="modal-panel card shadow-lg border-0" *ngIf="showTaskPanel">
+  <div class="card-header d-flex align-items-center justify-content-between py-3">
+    <h6 class="fw-bold mb-0">{{ panelMode === 'edit' ? 'Edit Task' : 'Add Task' }}</h6>
+    <button class="btn-close" (click)="showTaskPanel=false"></button>
+  </div>
+  <div class="card-body overflow-auto">
+    <div *ngIf="error" class="alert alert-danger py-2 small mb-3">{{ error }}</div>
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="row g-3">
+        <div class="col-12" *ngIf="panelMode === 'create'">
+          <label class="form-label small fw-semibold">Project *</label>
+          <select class="form-select form-select-sm" formControlName="project_id"
+            [class.is-invalid]="f['project_id'].invalid && f['project_id'].touched">
+            <option value="">— Select Project —</option>
+            <option *ngFor="let project of projects" [value]="project.project_id">{{ project.project_name }}</option>
+          </select>
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-12" *ngIf="panelMode === 'create'">
+          <label class="form-label small fw-semibold">Workflow Template *</label>
+          <select class="form-select form-select-sm" formControlName="workflow_template_id"
+            [class.is-invalid]="f['workflow_template_id'].invalid && f['workflow_template_id'].touched">
+            <option value="">— Select Template —</option>
+            <option *ngFor="let template of templates" [value]="template.workflow_template_id">{{ template.workflow_template_name }}</option>
+          </select>
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-8">
+          <label class="form-label small fw-semibold">Task Name *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="task_name"
+            [class.is-invalid]="f['task_name'].invalid && f['task_name'].touched">
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-4">
+          <label class="form-label small fw-semibold">Code *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="task_code"
+            [class.is-invalid]="f['task_code'].invalid && f['task_code'].touched">
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-semibold">Description</label>
+          <textarea class="form-control form-control-sm" formControlName="description" rows="2"></textarea>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Start Date</label>
+          <input type="date" class="form-control form-control-sm" formControlName="start_date">
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">End Date</label>
+          <input type="date" class="form-control form-control-sm" formControlName="end_date">
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="showTaskPanel=false">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+          <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>
+          {{ saving ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal-backdrop-custom" *ngIf="showSchedulePanel" (click)="showSchedulePanel=false"></div>
+<div class="modal-panel modal-panel-lg card shadow-lg border-0" *ngIf="showSchedulePanel">
+  <div class="card-header d-flex align-items-center justify-content-between py-3">
+    <div>
+      <h6 class="fw-bold mb-0">Workflow Schedule</h6>
+      <div class="text-muted" style="font-size:0.75rem">{{ selectedTask?.task_name }}</div>
+    </div>
+    <button class="btn-close" (click)="showSchedulePanel=false"></button>
+  </div>
+  <div class="card-body overflow-auto">
+    <div *ngIf="error" class="alert alert-danger py-2 small mb-3">{{ error }}</div>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead class="table-light">
+          <tr>
+            <th style="width:48px">#</th>
+            <th>Step</th>
+            <th style="width:145px">Start</th>
+            <th style="width:145px">End</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let step of scheduleSteps; let i=index">
+            <td><span class="badge bg-secondary-subtle text-secondary">{{ step.display_order || i + 1 }}</span></td>
+            <td>
+              <div class="fw-semibold small">{{ step.step_name }}</div>
+              <div class="text-muted" style="font-size:0.72rem">{{ step.step_code }}</div>
+            </td>
+            <td><input type="date" class="form-control form-control-sm" [(ngModel)]="step.start_date" [ngModelOptions]="{standalone:true}"></td>
+            <td><input type="date" class="form-control form-control-sm" [(ngModel)]="step.end_date" [ngModelOptions]="{standalone:true}"></td>
+            <td><input type="text" class="form-control form-control-sm" [(ngModel)]="step.notes" [ngModelOptions]="{standalone:true}"></td>
+          </tr>
+          <tr *ngIf="scheduleSteps.length === 0">
+            <td colspan="5" class="text-center text-muted py-4 small">No workflow steps found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="d-flex justify-content-end gap-2 mt-3">
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="showSchedulePanel=false">Cancel</button>
+      <button type="button" class="btn btn-sm btn-primary" (click)="saveSchedule()" [disabled]="scheduleSaving || scheduleSteps.length === 0">
+        <span *ngIf="scheduleSaving" class="spinner-border spinner-border-sm me-1"></span>
+        {{ scheduleSaving ? 'Saving...' : 'Save Schedule' }}
+      </button>
+    </div>
+  </div>
+</div>

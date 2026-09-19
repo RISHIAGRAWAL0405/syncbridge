@@ -1,0 +1,21 @@
+<section class="process" aria-label="Our process">
+  <div class="container">
+    <div class="process-header reveal">
+      <span class="section-label">How We Work</span>
+      <h2 class="section-title">The Lumière<br><em>Experience</em></h2>
+    </div>
+
+    <div class="process-steps">
+      @for (step of steps; track step.num; let i = $index) {
+        <div class="process-step reveal" [class]="'reveal-delay-' + (i % 3 + 1)">
+          <div class="step-num">{{ step.num }}</div>
+          <div class="step-line" aria-hidden="true"></div>
+          <div class="step-content">
+            <h3 class="step-title">{{ step.title }}</h3>
+            <p class="step-desc">{{ step.desc }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

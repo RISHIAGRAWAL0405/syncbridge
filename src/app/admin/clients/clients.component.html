@@ -1,0 +1,128 @@
+<div class="page-header d-flex align-items-center justify-content-between mb-4">
+  <div>
+    <h5 class="fw-bold mb-0">Clients</h5>
+    <p class="text-muted small mb-0">Manage client accounts</p>
+  </div>
+  <button class="btn btn-primary btn-sm" (click)="openCreate()">
+    <i class="bi bi-plus-lg me-1"></i>Add Client
+  </button>
+</div>
+
+<div *ngIf="success" class="alert alert-success alert-dismissible py-2 small">
+  <i class="bi bi-check-circle-fill me-2"></i>{{ success }}
+  <button type="button" class="btn-close btn-close-sm" (click)="success=''"></button>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white border-bottom py-3">
+    <div class="input-group input-group-sm" style="max-width:300px">
+      <span class="input-group-text bg-light border-end-0"><i class="bi bi-search text-muted"></i></span>
+      <input type="text" class="form-control border-start-0 ps-0" placeholder="Search clients..."
+        [(ngModel)]="searchTerm" [ngModelOptions]="{standalone:true}">
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div *ngIf="loading" class="text-center py-5">
+      <div class="spinner-border text-primary spinner-border-sm"></div>
+    </div>
+    <div class="table-responsive" *ngIf="!loading">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th class="ps-4">Client</th>
+            <th>Company</th>
+            <th>Mobile</th>
+            <th>Projects</th>
+            <th>Status</th>
+            <th class="text-end pe-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of filteredClients">
+            <td class="ps-4">
+              <div class="fw-semibold small">{{ client.client_name }}</div>
+              <div class="text-muted" style="font-size:0.75rem">{{ client.email }}</div>
+            </td>
+            <td class="small text-muted">{{ client.company_name || '—' }}</td>
+            <td class="small text-muted">{{ client.mobile || '—' }}</td>
+            <td><span class="badge bg-info-subtle text-info">{{ client.project_count }}</span></td>
+            <td>
+              <span class="badge" [class.bg-success-subtle]="client.is_active" [class.text-success]="client.is_active"
+                [class.bg-danger-subtle]="!client.is_active" [class.text-danger]="!client.is_active">
+                {{ client.is_active ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="text-end pe-4">
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="openEdit(client)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              <button class="btn btn-sm" [class.btn-outline-danger]="client.is_active" [class.btn-outline-success]="!client.is_active"
+                (click)="toggleStatus(client)">
+                <i class="bi" [class.bi-toggle-on]="client.is_active" [class.bi-toggle-off]="!client.is_active"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="filteredClients.length === 0">
+            <td colspan="6" class="text-center text-muted py-4 small">No clients found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-backdrop-custom" *ngIf="showModal" (click)="showModal=false"></div>
+<div class="modal-panel card shadow-lg border-0" *ngIf="showModal">
+  <div class="card-header d-flex align-items-center justify-content-between py-3">
+    <h6 class="fw-bold mb-0">{{ editingClient ? 'Edit Client' : 'Add Client' }}</h6>
+    <button class="btn-close" (click)="showModal=false"></button>
+  </div>
+  <div class="card-body overflow-auto">
+    <div *ngIf="error" class="alert alert-danger py-2 small mb-3">{{ error }}</div>
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+      <div class="row g-3">
+        <div class="col-12" *ngIf="!editingClient">
+          <label class="form-label small fw-semibold">Link to User *</label>
+          <select class="form-select form-select-sm" formControlName="client_id"
+            [class.is-invalid]="f['client_id'].invalid && f['client_id'].touched">
+            <option value="">— Select User —</option>
+            <option *ngFor="let u of users" [value]="u.user_id">{{ u.full_name }} ({{ u.email }})</option>
+          </select>
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-12">
+          <label class="form-label small fw-semibold">Client Name *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="client_name"
+            [class.is-invalid]="f['client_name'].invalid && f['client_name'].touched">
+          <div class="invalid-feedback">Required</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Email *</label>
+          <input type="email" class="form-control form-control-sm" formControlName="email"
+            [class.is-invalid]="f['email'].invalid && f['email'].touched">
+          <div class="invalid-feedback">Valid email required</div>
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Mobile</label>
+          <input type="text" class="form-control form-control-sm" formControlName="mobile">
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Company</label>
+          <input type="text" class="form-control form-control-sm" formControlName="company_name">
+        </div>
+        <div class="col-6">
+          <label class="form-label small fw-semibold">Address</label>
+          <input type="text" class="form-control form-control-sm" formControlName="address">
+        </div>
+      </div>
+      <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-sm btn-outline-secondary" (click)="showModal=false">Cancel</button>
+        <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+          <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>
+          {{ saving ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

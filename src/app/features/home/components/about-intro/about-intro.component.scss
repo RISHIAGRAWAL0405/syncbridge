@@ -1,0 +1,125 @@
+.about-intro {
+  padding: 7rem 0;
+  background: var(--tz-white);
+}
+
+.about-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+
+  @media (max-width: 1024px) { gap: 3.5rem; }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+// ─── Images ───────────────────────────────────────────────────────────────────
+.about-images {
+  position: relative;
+  height: 520px;
+
+  @media (max-width: 768px) { height: 300px; }
+}
+
+.about-img-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72%;
+  height: 100%;
+  border-radius: 20px;
+  box-shadow: var(--tz-shadow-lg);
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.about-img-secondary {
+  position: absolute;
+  bottom: -2rem;
+  right: 0;
+  width: 50%;
+  height: 200px;
+  border-radius: 16px;
+  box-shadow: var(--tz-shadow-lg);
+  border: 4px solid var(--tz-white);
+  z-index: 2;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 768px) { display: none; }
+}
+
+.about-img-stat {
+  position: absolute;
+  top: 2rem;
+  right: 0;
+  z-index: 3;
+  background: var(--tz-dark-green);
+  color: var(--tz-white);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--tz-shadow);
+  border: 3px solid var(--tz-white);
+
+  @media (max-width: 768px) { display: none; }
+}
+
+.about-stat-num {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--tz-lime);
+  line-height: 1;
+}
+
+.about-stat-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-align: center;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 0.3rem;
+}
+
+// ─── Text ─────────────────────────────────────────────────────────────────────
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-desc {
+  font-size: 1rem;
+  color: var(--tz-text-muted);
+  line-height: 1.8;
+}
+
+.about-capabilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.capability-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--tz-dark-green);
+  background: rgba(13,43,30,0.06);
+  border: 1px solid rgba(13,43,30,0.1);
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+
+  svg { color: var(--tz-lime-dark); flex-shrink: 0; }
+}
+
+.about-actions { display: flex; }

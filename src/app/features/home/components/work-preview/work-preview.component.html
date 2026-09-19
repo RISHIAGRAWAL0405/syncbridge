@@ -1,0 +1,39 @@
+<section class="work-preview" aria-label="Our work">
+  <div class="container">
+    <div class="wp-header">
+      <div class="reveal">
+        <span class="tz-eyebrow tz-eyebrow-dark">Our Work</span>
+        <h2 class="tz-section-title reveal reveal-delay-1">Work That Speaks<br>For Itself.</h2>
+      </div>
+      <a routerLink="/portfolio" class="tz-btn-outline-dark reveal reveal-delay-2">
+        View All Work
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="wp-grid">
+      @for (project of preview; track project.id; let i = $index) {
+        <a routerLink="/portfolio" class="wp-card reveal" [class.wp-card--large]="i === 0" [class]="'reveal-delay-' + (i % 3 + 1)">
+          <div class="wp-card-img img-mask">
+            <img [src]="project.image" [alt]="project.title" loading="lazy" width="800" height="600">
+          </div>
+          <div class="wp-card-overlay">
+            <div class="wp-card-info">
+              <span class="wp-card-industry">{{ project.industry }}</span>
+              <h3 class="wp-card-title">{{ project.title }}</h3>
+              <div class="wp-card-services">
+                @for (s of project.services.slice(0,3); track s) {
+                  <span class="wp-tag">{{ s }}</span>
+                }
+              </div>
+            </div>
+            <span class="wp-card-cta">
+              View Case Study
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>

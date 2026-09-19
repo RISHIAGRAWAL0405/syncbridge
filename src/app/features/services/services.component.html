@@ -1,0 +1,54 @@
+<!-- Page Hero -->
+<div class="tz-page-hero">
+  <div class="container tz-page-hero-inner">
+    <span class="tz-eyebrow reveal">Our Services</span>
+    <h1 class="reveal reveal-delay-1">Full-Service Capabilities<br>Under One Roof.</h1>
+    <p class="reveal reveal-delay-2">From strategy and branding to digital marketing, web development and video production — everything your brand needs to grow.</p>
+  </div>
+</div>
+
+<!-- Services Grid -->
+<section class="services-page">
+  <div class="container">
+    <div class="svc-grid">
+      @for (svc of data.services; track svc.id; let i = $index) {
+        <article class="svc-card reveal" [class]="'reveal-delay-' + (i % 3 + 1)">
+          <div class="svc-card-img img-mask">
+            <img [src]="svc.image" [alt]="svc.title" loading="lazy" width="600" height="360">
+          </div>
+          <div class="svc-card-body">
+            <div class="svc-icon" [innerHTML]="svc.icon" aria-hidden="true"></div>
+            <h2 class="svc-title">{{ svc.title }}</h2>
+            <p class="svc-desc">{{ svc.description }}</p>
+            <ul class="svc-features">
+              @for (f of svc.features; track f) {
+                <li>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                  {{ f }}
+                </li>
+              }
+            </ul>
+            <a routerLink="/contact" class="svc-cta">
+              Get Started
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA -->
+<section class="svc-bottom-cta">
+  <div class="container">
+    <div class="svc-cta-inner reveal">
+      <h2>Not Sure Which Service You Need?</h2>
+      <p>Talk to us — we'll help you figure out the right approach for your brand and goals.</p>
+      <a routerLink="/contact" class="tz-btn-lime">
+        Talk to Us
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>

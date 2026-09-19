@@ -1,0 +1,92 @@
+<!-- Page Hero -->
+<section class="about-hero">
+  <div class="about-hero-img img-mask">
+    <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1920&q=85" alt="Lumière Studio photographer at work" loading="eager" width="1920" height="1080">
+  </div>
+  <div class="about-hero-overlay"></div>
+  <div class="about-hero-content">
+    <span class="section-label reveal">Our Story</span>
+    <h1 class="about-hero-title reveal reveal-delay-1">We Don't Just<br><em>Take Photos</em></h1>
+    <p class="about-hero-sub reveal reveal-delay-2">We craft visual legacies that outlive moments.</p>
+  </div>
+</section>
+
+<!-- Story Section -->
+<section class="about-story">
+  <div class="container">
+    <div class="story-grid">
+      <div class="story-img-col reveal">
+        <div class="story-img-main img-mask">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800&q=80" alt="Photographer with camera" loading="lazy" width="800" height="1000">
+        </div>
+        <div class="story-img-accent img-mask">
+          <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80" alt="Photography equipment" loading="lazy" width="600" height="400">
+        </div>
+      </div>
+      <div class="story-text-col">
+        <span class="section-label reveal">The Vision</span>
+        <h2 class="section-title reveal reveal-delay-1">A Decade of<br><em>Cinematic Artistry</em></h2>
+        <p class="story-text reveal reveal-delay-2">Founded in 2015 by award-winning photographer Alexandre Moreau, Lumière Studio was born from a singular belief: that photography is not merely documentation — it is the art of freezing emotion, light, and truth into a single, eternal frame.</p>
+        <p class="story-text reveal reveal-delay-3">From intimate weddings in Tuscany to high-fashion campaigns in Tokyo, our work spans continents and cultures, united by an unwavering commitment to excellence and a deeply personal approach to every story we tell.</p>
+        <a routerLink="/portfolio" class="btn-primary reveal reveal-delay-4"><span>See Our Work</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="about-stats">
+  <div class="container">
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label; let i = $index) {
+        <div class="stat-item reveal" [class]="'reveal-delay-' + (i + 1)">
+          <span class="stat-number">{{ stat.num }}</span>
+          <span class="stat-label">{{ stat.label }}</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="about-timeline">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Our Journey</span>
+      <h2 class="section-title reveal-delay-1">Milestones That<br><em>Shaped Us</em></h2>
+    </div>
+    <div class="timeline">
+      @for (item of timeline; track item.year; let i = $index) {
+        <div class="timeline-item reveal" [class]="'reveal-delay-' + (i % 3 + 1)" [class.right]="i % 2 !== 0">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content glass">
+            <span class="timeline-year">{{ item.year }}</span>
+            <p class="timeline-event">{{ item.event }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Awards -->
+<section class="about-awards">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Recognition</span>
+      <h2 class="section-title reveal-delay-1">Awards &<br><em>Achievements</em></h2>
+    </div>
+    <div class="awards-list">
+      @for (award of awards; track award.title; let i = $index) {
+        <div class="award-item reveal" [class]="'reveal-delay-' + (i % 3 + 1)">
+          <span class="award-year">{{ award.year }}</span>
+          <div class="award-info">
+            <h3 class="award-title">{{ award.title }}</h3>
+            <span class="award-org">{{ award.org }}</span>
+          </div>
+          <div class="award-icon" aria-hidden="true">✦</div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

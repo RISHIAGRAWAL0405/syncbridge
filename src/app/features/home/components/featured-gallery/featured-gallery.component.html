@@ -1,0 +1,52 @@
+<section class="featured-gallery" aria-label="Featured gallery">
+  <div class="container">
+    <div class="gallery-header">
+      <div class="reveal">
+        <span class="section-label">Selected Works</span>
+        <h2 class="section-title">Featured<br><em>Portfolio</em></h2>
+      </div>
+      <a routerLink="/portfolio" class="btn-outline reveal reveal-delay-2"
+         (mouseenter)="cursor.setHover(true)" (mouseleave)="cursor.setHover(false)">
+        <span>View All Work</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="gallery-masonry">
+    @for (item of featured; track item.id; let i = $index) {
+      <div class="gallery-item reveal" [class]="'reveal-delay-' + (i % 3 + 1)"
+           (click)="openLightbox(item)"
+           (mouseenter)="cursor.setHover(true, 'View')" (mouseleave)="cursor.setHover(false)">
+        <div class="gallery-img-wrap img-mask">
+          <img [src]="item.image" [alt]="item.title" loading="lazy" width="900" height="600">
+        </div>
+        <div class="gallery-item-overlay">
+          <div class="gallery-item-info">
+            <span class="gallery-item-cat">{{ item.category }}</span>
+            <h3 class="gallery-item-title">{{ item.title }}</h3>
+          </div>
+          <div class="gallery-item-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Lightbox -->
+  @if (lightboxItem()) {
+    <div class="lightbox" (click)="closeLightbox()" role="dialog" aria-modal="true" [attr.aria-label]="lightboxItem()!.title">
+      <button class="lightbox-close" (click)="closeLightbox()" aria-label="Close lightbox">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="lightbox-content" (click)="$event.stopPropagation()">
+        <img [src]="lightboxItem()!.image" [alt]="lightboxItem()!.title" loading="lazy">
+        <div class="lightbox-info">
+          <span class="lightbox-cat">{{ lightboxItem()!.category }}</span>
+          <h3 class="lightbox-title">{{ lightboxItem()!.title }}</h3>
+        </div>
+      </div>
+    </div>
+  }
+</section>

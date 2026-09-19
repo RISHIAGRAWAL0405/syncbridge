@@ -1,0 +1,155 @@
+<div class="page-header mb-4">
+  <h5 class="fw-bold mb-0">My Profile</h5>
+  <p class="text-muted small mb-0">Manage your account settings</p>
+</div>
+
+<div *ngIf="success" class="alert alert-success alert-dismissible py-2 small">
+  <i class="bi bi-check-circle-fill me-2"></i>{{ success }}
+  <button type="button" class="btn-close btn-close-sm" (click)="success=''"></button>
+</div>
+<div *ngIf="error" class="alert alert-danger alert-dismissible py-2 small">
+  <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+  <button type="button" class="btn-close btn-close-sm" (click)="error=''"></button>
+</div>
+
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-primary spinner-border-sm"></div>
+</div>
+
+<div *ngIf="!loading && profile" class="row g-4">
+  <!-- Profile Card -->
+  <div class="col-md-3">
+    <div class="card border-0 shadow-sm text-center p-4">
+      <div class="position-relative d-inline-block mx-auto mb-3">
+        <div *ngIf="!profile.profile_img_url" class="avatar-lg bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-3 mx-auto">
+          {{ initials }}
+        </div>
+        <img *ngIf="profile.profile_img_url" [src]="baseUrl + profile.profile_img_url" class="rounded-circle avatar-lg object-fit-cover" alt="Profile">
+        <label class="btn btn-sm btn-primary position-absolute bottom-0 end-0 rounded-circle p-1" style="width:28px;height:28px;cursor:pointer">
+          <i class="bi bi-camera-fill" style="font-size:0.7rem"></i>
+          <input type="file" class="d-none" accept="image/*" (change)="onImageChange($event)">
+        </label>
+      </div>
+      <h6 class="fw-bold mb-0">{{ profile.first_name }} {{ profile.last_name }}</h6>
+      <div class="text-muted small">{{ profile.user_type }}</div>
+      <div class="mt-2">
+        <span class="badge bg-success-subtle text-success small">{{ profile.online_status || 'ONLINE' }}</span>
+      </div>
+      <div class="mt-2 text-muted small">{{ profile.email }}</div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="col-md-9">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white border-bottom">
+        <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab==='details'" (click)="activeTab='details'">
+              <i class="bi bi-person me-1"></i>Details
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab==='password'" (click)="activeTab='password'">
+              <i class="bi bi-lock me-1"></i>Password
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" [class.active]="activeTab==='status'" (click)="activeTab='status'">
+              <i class="bi bi-circle-fill me-1"></i>Status
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+
+        <!-- Details Tab -->
+        <form *ngIf="activeTab==='details'" [formGroup]="detailsForm" (ngSubmit)="saveDetails()" novalidate>
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="form-label small fw-semibold">First Name *</label>
+              <input type="text" class="form-control form-control-sm" formControlName="first_name"
+                [class.is-invalid]="df['first_name'].invalid && df['first_name'].touched">
+              <div class="invalid-feedback">Required</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-semibold">Last Name *</label>
+              <input type="text" class="form-control form-control-sm" formControlName="last_name"
+                [class.is-invalid]="df['last_name'].invalid && df['last_name'].touched">
+              <div class="invalid-feedback">Required</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-semibold">Email *</label>
+              <input type="email" class="form-control form-control-sm" formControlName="email"
+                [class.is-invalid]="df['email'].invalid && df['email'].touched">
+              <div class="invalid-feedback">Valid email required</div>
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-semibold">Mobile</label>
+              <input type="text" class="form-control form-control-sm" formControlName="mobile">
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+              <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>Save Changes
+            </button>
+          </div>
+        </form>
+
+        <!-- Password Tab -->
+        <form *ngIf="activeTab==='password'" [formGroup]="passwordForm" (ngSubmit)="changePassword()" novalidate>
+          <div class="row g-3" style="max-width:400px">
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Current Password *</label>
+              <input type="password" class="form-control form-control-sm" formControlName="old_password"
+                [class.is-invalid]="pf['old_password'].invalid && pf['old_password'].touched">
+              <div class="invalid-feedback">Required</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">New Password *</label>
+              <input type="password" class="form-control form-control-sm" formControlName="new_password"
+                [class.is-invalid]="pf['new_password'].invalid && pf['new_password'].touched">
+              <div class="invalid-feedback">Min 6 characters</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Confirm Password *</label>
+              <input type="password" class="form-control form-control-sm" formControlName="confirm_password"
+                [class.is-invalid]="(pf['confirm_password'].touched && passwordForm.errors?.['mismatch'])">
+              <div class="invalid-feedback">Passwords do not match</div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+              <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>Change Password
+            </button>
+          </div>
+        </form>
+
+        <!-- Status Tab -->
+        <form *ngIf="activeTab==='status'" [formGroup]="statusForm" (ngSubmit)="updateStatus()" novalidate>
+          <div class="row g-3" style="max-width:400px">
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Online Status</label>
+              <select class="form-select form-select-sm" formControlName="online_status">
+                <option value="ONLINE">Online</option>
+                <option value="AWAY">Away</option>
+                <option value="BUSY">Busy</option>
+                <option value="OFFLINE">Offline</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-semibold">Status Message</label>
+              <input type="text" class="form-control form-control-sm" formControlName="status_message" placeholder="What are you up to?">
+            </div>
+          </div>
+          <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-sm btn-primary" [disabled]="saving">
+              <span *ngIf="saving" class="spinner-border spinner-border-sm me-1"></span>Update Status
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

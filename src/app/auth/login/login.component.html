@@ -1,0 +1,56 @@
+<div class="auth-wrapper d-flex align-items-center justify-content-center min-vh-100">
+  <div class="auth-card card shadow-lg border-0 p-4 p-md-5">
+    <div class="text-center mb-4">
+      <div class="auth-logo mb-3">
+        <i class="bi bi-shield-lock-fill text-primary" style="font-size:2.5rem"></i>
+      </div>
+      <h4 class="fw-bold mb-1">Welcome Back</h4>
+      <p class="text-muted small">Sign in to your account</p>
+    </div>
+
+    <div *ngIf="error" class="alert alert-danger alert-dismissible py-2 small" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+      <button type="button" class="btn-close btn-close-sm" (click)="error=''"></button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Username</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0">
+            <i class="bi bi-person text-muted"></i>
+          </span>
+          <input type="text" class="form-control border-start-0 ps-0"
+            formControlName="user_name" placeholder="Enter username"
+            [class.is-invalid]="f['user_name'].invalid && f['user_name'].touched">
+          <div class="invalid-feedback">Username is required</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold small">Password</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0">
+            <i class="bi bi-lock text-muted"></i>
+          </span>
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control border-start-0 border-end-0 ps-0"
+            formControlName="password" placeholder="Enter password"
+            [class.is-invalid]="f['password'].invalid && f['password'].touched">
+          <button type="button" class="input-group-text bg-light border-start-0" (click)="showPassword=!showPassword">
+            <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword" class="text-muted"></i>
+          </button>
+          <div class="invalid-feedback">Password is required</div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-end mb-3">
+        <a routerLink="/auth/forgot-password" class="text-primary small text-decoration-none">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" [disabled]="loading">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+        {{ loading ? 'Signing in...' : 'Sign In' }}
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,103 @@
+.blog-page { padding-top: var(--nav-height); min-height: 100vh; }
+
+.blog-header { padding: 5rem 0 4rem; }
+
+.blog-title {
+  font-family: var(--font-heading);
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin: 1rem 0;
+  em { font-style: italic; color: var(--color-accent); }
+}
+
+.blog-sub { font-size: 1rem; color: var(--color-text-muted); max-width: 480px; }
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding-bottom: 6rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 640px) { grid-template-columns: 1fr; }
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  cursor: none;
+
+  &:hover {
+    .blog-img-wrap img { transform: scale(1.06); }
+    .blog-read-more { gap: 0.9rem; }
+  }
+}
+
+.blog-img-wrap {
+  overflow: hidden;
+  aspect-ratio: 16/10;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.04);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+}
+
+.blog-content { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.blog-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+.blog-cat {
+  color: var(--color-accent);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.blog-sep { opacity: 0.4; }
+
+.blog-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+
+  .blog-card:hover & { color: var(--color-accent); }
+}
+
+.blog-excerpt {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.blog-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-top: 0.5rem;
+  transition: gap 0.3s ease;
+}

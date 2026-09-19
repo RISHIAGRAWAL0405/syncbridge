@@ -1,0 +1,71 @@
+<div class="sb-layout" [class.sb-collapsed]="!sidebarOpen">
+
+  <!-- Sidebar -->
+  <aside class="sb-sidebar">
+    <div class="sb-brand">
+      <div class="sb-brand-icon">
+        <i class="bi bi-infinity"></i>
+      </div>
+      <span class="sb-brand-name">Sync Bridge</span>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-nav-section">
+        <span class="sb-nav-label">Main</span>
+        <ul>
+          <li *ngFor="let item of mainNav">
+            <a class="sb-nav-link" [routerLink]="item.route" routerLinkActive="active">
+              <i class="bi {{ item.icon }}"></i>
+              <span>{{ item.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="sb-nav-section">
+        <span class="sb-nav-label">Configuration</span>
+        <ul>
+          <li *ngFor="let item of configNav">
+            <a class="sb-nav-link" [routerLink]="item.route" routerLinkActive="active">
+              <i class="bi {{ item.icon }}"></i>
+              <span>{{ item.label }}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="sb-user">
+      <div class="sb-user-avatar">{{ userInitials }}</div>
+      <div class="sb-user-info">
+        <div class="sb-user-name">{{ user?.firstName }} {{ user?.lastName }}</div>
+        <div class="sb-user-role">{{ user?.userType }}</div>
+      </div>
+      <button class="sb-logout-btn" (click)="logout()" title="Logout">
+        <i class="bi bi-box-arrow-right"></i>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="sb-main">
+    <!-- Topbar -->
+    <header class="sb-topbar">
+      <button class="sb-toggle" (click)="toggleSidebar()">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="sb-breadcrumb">
+        <span class="sb-page-title">{{ currentPageTitle }}</span>
+      </div>
+      <div class="sb-topbar-right">
+        <div class="sb-topbar-avatar" title="{{ user?.firstName }} {{ user?.lastName }}">
+          {{ userInitials }}
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="sb-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="blog-page">
+  <div class="blog-header">
+    <div class="container">
+      <span class="section-label reveal">Journal</span>
+      <h1 class="blog-title reveal reveal-delay-1">Stories &<br><em>Insights</em></h1>
+      <p class="blog-sub reveal reveal-delay-2">Behind the lens — thoughts on craft, light, and the art of seeing.</p>
+    </div>
+  </div>
+
+  <div class="blog-grid container">
+    @for (post of data.blogPosts; track post.id; let i = $index) {
+      <article class="blog-card reveal" [class]="'reveal-delay-' + (i + 1)"
+               (mouseenter)="cursor.setHover(true, 'Read')" (mouseleave)="cursor.setHover(false)">
+        <div class="blog-img-wrap img-mask">
+          <img [src]="post.image" [alt]="post.title" loading="lazy" width="800" height="500">
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span class="blog-cat">{{ post.category }}</span>
+            <span class="blog-sep">·</span>
+            <time [attr.datetime]="post.date">{{ formatDate(post.date) }}</time>
+            <span class="blog-sep">·</span>
+            <span>{{ post.readTime }} min read</span>
+          </div>
+          <h2 class="blog-card-title">{{ post.title }}</h2>
+          <p class="blog-excerpt">{{ post.excerpt }}</p>
+          <a href="#" class="blog-read-more">
+            <span>Read Article</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+    }
+  </div>
+</div>

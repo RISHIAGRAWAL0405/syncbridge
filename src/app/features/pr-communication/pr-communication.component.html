@@ -1,0 +1,168 @@
+<main>
+  <!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+  <section class="pr-hero" aria-label="PR Communication hero">
+    <div class="container">
+      <div class="pr-hero-inner">
+        <div class="pr-hero-content">
+          <div class="reveal">
+            <span class="tz-eyebrow">PR &bull; Events &bull; Communication</span>
+          </div>
+          <h1 class="pr-hero-title reveal reveal-delay-1">
+            Connecting Ideas,<br>
+            <span class="pr-hero-accent">Creating Impact.</span>
+          </h1>
+          <p class="pr-hero-desc reveal reveal-delay-2">
+            Explore the events, exhibitions, conferences and industry engagements where Sync Bridge connects with people, ideas and opportunities that shape the future.
+          </p>
+          <div class="pr-hero-actions reveal reveal-delay-3">
+            <a routerLink="/contact" class="tz-btn-lime">
+              Start a Project
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a routerLink="/about" class="tz-btn-outline-dark">About Us</a>
+          </div>
+        </div>
+
+        <div class="pr-hero-visual reveal reveal-delay-2" aria-hidden="true">
+          <div class="pr-hero-img-main img-mask">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80"
+                 alt="EVOKE Expo event" loading="eager" width="600" height="700">
+          </div>
+          <div class="pr-hero-img-accent img-mask">
+            <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500&q=80"
+                 alt="Industry conference" loading="eager" width="300" height="220">
+          </div>
+          <div class="pr-hero-badge">
+            <span class="pr-hero-badge-num">50+</span>
+            <span class="pr-hero-badge-text">Industry<br>Events</span>
+          </div>
+          <div class="pr-hero-dot-grid" aria-hidden="true"></div>
+          <div class="pr-hero-circle" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MOMENTS WORTH SHARING ─────────────────────────────────────────────── -->
+  <section class="pr-moments" aria-label="Featured moments">
+    <div class="container">
+      <div class="pr-section-head reveal">
+        <span class="tz-eyebrow tz-eyebrow-dark">Moments Worth Sharing</span>
+        <h2 class="tz-section-title reveal reveal-delay-1">Where Our Work<br>Meets the World.</h2>
+        <p class="pr-section-sub reveal reveal-delay-2">From industry exhibitions to meaningful conversations, these are the moments that represent our journey, collaboration and growth.</p>
+      </div>
+
+      @for (event of featuredEvents; track event.id; let i = $index) {
+        <article class="pr-feature-row reveal" [class.pr-feature-row--reverse]="i % 2 !== 0">
+          <div class="pr-feature-img">
+            <img [src]="event.coverImage" [alt]="event.title" loading="lazy" width="700" height="480">
+          </div>
+          <div class="pr-feature-content">
+            <span class="tz-eyebrow tz-eyebrow-dark">{{ event.categoryLabel }}</span>
+            <h3 class="pr-feature-title">{{ event.title }}</h3>
+            <div class="pr-feature-meta">
+              <span class="pr-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                {{ event.date }}
+              </span>
+              <span class="pr-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                {{ event.location }}
+              </span>
+            </div>
+            <p class="pr-feature-desc">{{ event.shortDescription }}</p>
+            <a [routerLink]="['/pr-communication', event.slug]" class="pr-feature-cta">
+              Explore Event
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <!-- ── STATS ──────────────────────────────────────────────────────────────── -->
+  <section class="pr-stats-section" aria-label="Impact statistics">
+    <div class="container">
+      <div class="pr-stats-grid">
+        @for (stat of counters(); track stat.label) {
+          <div class="pr-stat-item">
+            <span class="pr-stat-num">{{ stat.num }}{{ stat.suffix }}</span>
+            <span class="pr-stat-label">{{ stat.label }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LATEST PR & EVENTS ─────────────────────────────────────────────────── -->
+  <section class="pr-events-section" aria-label="Latest PR and events">
+    <div class="container">
+      <div class="pr-section-head reveal">
+        <span class="tz-eyebrow tz-eyebrow-dark">Latest PR &amp; Events</span>
+        <h2 class="tz-section-title reveal reveal-delay-1">Featured Events</h2>
+        <p class="pr-section-sub reveal reveal-delay-2">Moments that connect us with people, ideas and industries.</p>
+      </div>
+
+      <div class="pr-filter reveal reveal-delay-2" role="tablist" aria-label="Filter events by category">
+        @for (cat of categories; track cat.id) {
+          <button class="pr-filter-btn" [class.active]="activeCategory() === cat.id"
+                  (click)="setCategory(cat.id)" role="tab"
+                  [attr.aria-selected]="activeCategory() === cat.id">
+            {{ cat.label }}
+          </button>
+        }
+      </div>
+
+      <div class="pr-events-grid">
+        @for (event of filteredEvents(); track event.id; let i = $index) {
+          <article class="pr-event-card reveal" [class]="'reveal-delay-' + (i % 3 + 1)">
+            <a [routerLink]="['/pr-communication', event.slug]" class="pr-card-img-wrap" [attr.aria-label]="'View ' + event.title">
+              <img [src]="event.coverImage" [alt]="event.title" loading="lazy" width="600" height="380">
+              <span class="pr-card-cat-badge">{{ event.category }}</span>
+            </a>
+            <div class="pr-card-body">
+              <div class="pr-card-meta">
+                <span>{{ event.location }}</span>
+                <span class="pr-card-meta-sep">•</span>
+                <span>{{ event.year }}</span>
+              </div>
+              <h3 class="pr-card-title">
+                <a [routerLink]="['/pr-communication', event.slug]">{{ event.title }}</a>
+              </h3>
+              <p class="pr-card-desc">{{ event.shortDescription }}</p>
+              <a [routerLink]="['/pr-communication', event.slug]" class="pr-card-cta" [attr.aria-label]="'Explore ' + event.title">
+                Explore Event
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </article>
+        }
+        @if (filteredEvents().length === 0) {
+          <div class="pr-empty-state">
+            <p>No events found in this category.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────────────── -->
+  <section class="pr-cta-section" aria-label="Call to action">
+    <div class="container">
+      <div class="pr-cta-inner reveal">
+        <div class="pr-cta-text">
+          <h2>Let's Create Something<br><span class="pr-cta-accent">Worth Talking About.</span></h2>
+          <p>Have a project, partnership or idea you'd like to explore? Let's start a conversation.</p>
+        </div>
+        <div class="pr-cta-actions">
+          <a routerLink="/contact" class="tz-btn-lime">
+            Start a Project
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="tel:+919377697676" class="tz-btn-outline-white">Talk to Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

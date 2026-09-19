@@ -1,0 +1,45 @@
+<div class="pricing-page">
+  <div class="pricing-header">
+    <div class="container">
+      <span class="section-label reveal">Investment</span>
+      <h1 class="pricing-title reveal reveal-delay-1">Transparent<br><em>Pricing</em></h1>
+      <p class="pricing-sub reveal reveal-delay-2">Every package is a promise of excellence, crafted to deliver extraordinary value.</p>
+    </div>
+  </div>
+
+  <div class="pricing-grid container">
+    @for (plan of data.pricingPlans; track plan.id; let i = $index) {
+      <div class="pricing-card" [class.highlighted]="plan.highlighted"
+           [class]="'reveal reveal-delay-' + (i + 1)"
+           (mouseenter)="cursor.setHover(true)" (mouseleave)="cursor.setHover(false)">
+        @if (plan.highlighted) {
+          <div class="pricing-badge">Most Popular</div>
+        }
+        <div class="pricing-top">
+          <h3 class="plan-name">{{ plan.name }}</h3>
+          <p class="plan-desc">{{ plan.description }}</p>
+        </div>
+        <div class="plan-price">
+          <span class="price-currency">{{ plan.currency }}</span>
+          <span class="price-amount">{{ plan.price.toLocaleString() }}</span>
+          <span class="price-period">/ {{ plan.period }}</span>
+        </div>
+        <ul class="plan-features">
+          @for (f of plan.features; track f) {
+            <li>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+              {{ f }}
+            </li>
+          }
+        </ul>
+        <a routerLink="/contact" class="plan-cta" [class.btn-primary]="plan.highlighted" [class.btn-outline]="!plan.highlighted">
+          <span>{{ plan.highlighted ? 'Book Now' : plan.cta }}</span>
+        </a>
+      </div>
+    }
+  </div>
+
+  <div class="pricing-note container reveal">
+    <p>All packages include a complimentary consultation. Custom packages available for unique requirements. <a routerLink="/contact">Contact us</a> to discuss your vision.</p>
+  </div>
+</div>

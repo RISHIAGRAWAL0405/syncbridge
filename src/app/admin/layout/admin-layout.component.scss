@@ -1,0 +1,298 @@
+// ─── Admin Layout ─────────────────────────────────────────────────────────────
+$sidebar-width: 248px;
+$sidebar-collapsed: 64px;
+$topbar-height: 60px;
+$sidebar-bg: #0f1117;
+$sidebar-border: rgba(255,255,255,0.07);
+$accent: #4f6ef7;
+$accent-light: rgba(79,110,247,0.12);
+
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+  cursor: auto;
+  * { cursor: auto; }
+}
+
+// ─── Layout Shell ─────────────────────────────────────────────────────────────
+.sb-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f4f6fb;
+}
+
+// ─── Sidebar ──────────────────────────────────────────────────────────────────
+.sb-sidebar {
+  width: $sidebar-width;
+  min-width: $sidebar-width;
+  background: $sidebar-bg;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s ease, min-width 0.25s ease;
+  overflow: hidden;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+// Brand
+.sb-brand {
+  height: $topbar-height;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid $sidebar-border;
+  flex-shrink: 0;
+
+  .sb-brand-icon {
+    width: 32px;
+    height: 32px;
+    background: $accent;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    i { color: #fff; font-size: 1rem; }
+  }
+
+  .sb-brand-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+}
+
+// Nav
+.sb-nav {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1rem 0.75rem;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.sb-nav-section {
+  margin-bottom: 1.5rem;
+
+  ul { list-style: none; padding: 0; margin: 0; }
+}
+
+.sb-nav-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  padding: 0 0.5rem;
+  margin-bottom: 0.4rem;
+  white-space: nowrap;
+}
+
+.sb-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.83rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  margin-bottom: 2px;
+
+  i { font-size: 1rem; flex-shrink: 0; min-width: 1rem; }
+
+  &:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+  }
+
+  &.active {
+    background: $accent-light;
+    color: #7b9bff;
+    font-weight: 600;
+
+    i { color: $accent; }
+  }
+}
+
+// User footer
+.sb-user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  border-top: 1px solid $sidebar-border;
+  flex-shrink: 0;
+}
+
+.sb-user-avatar {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  background: $accent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.sb-user-info {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+
+  .sb-user-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sb-user-role {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.sb-logout-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  padding: 0.35rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+  flex-shrink: 0;
+  cursor: pointer !important;
+
+  i { font-size: 1rem; }
+
+  &:hover {
+    background: rgba(220,53,69,0.15);
+    color: #ff6b6b;
+  }
+}
+
+// ─── Main Area ────────────────────────────────────────────────────────────────
+.sb-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// Topbar
+.sb-topbar {
+  height: $topbar-height;
+  background: #fff;
+  border-bottom: 1px solid #e8ecf0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.sb-toggle {
+  background: none;
+  border: none;
+  color: #6c757d;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  cursor: pointer !important;
+  transition: all 0.18s;
+  flex-shrink: 0;
+
+  &:hover { background: #f0f4ff; color: #4f6ef7; }
+}
+
+.sb-breadcrumb { flex: 1; }
+
+.sb-page-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1a1d23;
+}
+
+.sb-topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+.sb-topbar-avatar {
+  width: 34px;
+  height: 34px;
+  background: $accent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer !important;
+}
+
+// Content
+.sb-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1.75rem;
+  background: #f4f6fb;
+}
+
+// ─── Collapsed State ──────────────────────────────────────────────────────────
+.sb-collapsed {
+  .sb-sidebar {
+    width: $sidebar-collapsed;
+    min-width: $sidebar-collapsed;
+  }
+
+  .sb-brand-name,
+  .sb-nav-label,
+  .sb-nav-link span,
+  .sb-user-info,
+  .sb-logout-btn { display: none; }
+
+  .sb-nav-link {
+    justify-content: center;
+    padding: 0.6rem;
+    i { min-width: unset; }
+  }
+
+  .sb-user { justify-content: center; }
+}
+
+// ─── Mobile ───────────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .sb-sidebar {
+    position: fixed;
+    height: 100vh;
+    z-index: 1030;
+  }
+
+  .sb-content { padding: 1rem; }
+}

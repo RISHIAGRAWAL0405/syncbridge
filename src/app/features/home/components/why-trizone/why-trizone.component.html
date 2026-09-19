@@ -1,0 +1,17 @@
+<section class="why-syncbridge" aria-label="Why choose Sync Bridge">
+  <div class="container">
+    <div class="wt-header reveal">
+      <span class="tz-eyebrow tz-eyebrow-dark">Why Sync Bridge</span>
+      <h2 class="tz-section-title reveal reveal-delay-1">What Sets Us Apart.</h2>
+    </div>
+    <div class="wt-grid">
+      @for (r of reasons; track r.title; let i = $index) {
+        <div class="wt-card reveal" [class]="'reveal-delay-' + (i % 3 + 1)">
+          <div class="wt-icon" [innerHTML]="r.icon" aria-hidden="true"></div>
+          <h3 class="wt-title">{{ r.title }}</h3>
+          <p class="wt-desc">{{ r.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

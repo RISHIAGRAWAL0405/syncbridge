@@ -1,0 +1,98 @@
+<div class="page-header mb-4">
+  <h5 class="fw-bold mb-0">Dashboard</h5>
+  <p class="text-muted small mb-0">Welcome back, {{ user?.firstName }}!</p>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-primary-subtle rounded-3 p-3">
+          <i class="bi bi-people-fill text-primary fs-4"></i>
+        </div>
+        <div>
+          <div class="h4 fw-bold mb-0">{{ stats.users }}</div>
+          <div class="text-muted small">Total Users</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-success-subtle rounded-3 p-3">
+          <i class="bi bi-person-badge-fill text-success fs-4"></i>
+        </div>
+        <div>
+          <div class="h4 fw-bold mb-0">{{ stats.clients }}</div>
+          <div class="text-muted small">Total Clients</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-info-subtle rounded-3 p-3">
+          <i class="bi bi-kanban-fill text-info fs-4"></i>
+        </div>
+        <div>
+          <div class="h4 fw-bold mb-0">{{ stats.projects }}</div>
+          <div class="text-muted small">Total Projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-body d-flex align-items-center gap-3">
+        <div class="stat-icon bg-warning-subtle rounded-3 p-3">
+          <i class="bi bi-activity text-warning fs-4"></i>
+        </div>
+        <div>
+          <div class="h4 fw-bold mb-0">{{ stats.activeProjects }}</div>
+          <div class="text-muted small">Active Projects</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6 col-lg-3">
+    <a routerLink="/admin/users" class="card border-0 shadow-sm text-decoration-none quick-link-card">
+      <div class="card-body text-center py-4">
+        <i class="bi bi-people fs-2 text-primary mb-2 d-block"></i>
+        <div class="fw-semibold">Manage Users</div>
+        <div class="text-muted small">Add, edit, activate users</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <a routerLink="/admin/clients" class="card border-0 shadow-sm text-decoration-none quick-link-card">
+      <div class="card-body text-center py-4">
+        <i class="bi bi-person-badge fs-2 text-success mb-2 d-block"></i>
+        <div class="fw-semibold">Manage Clients</div>
+        <div class="text-muted small">View and manage clients</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <a routerLink="/admin/projects" class="card border-0 shadow-sm text-decoration-none quick-link-card">
+      <div class="card-body text-center py-4">
+        <i class="bi bi-kanban fs-2 text-info mb-2 d-block"></i>
+        <div class="fw-semibold">Manage Projects</div>
+        <div class="text-muted small">Track all projects</div>
+      </div>
+    </a>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <a routerLink="/admin/roles" class="card border-0 shadow-sm text-decoration-none quick-link-card">
+      <div class="card-body text-center py-4">
+        <i class="bi bi-shield-check fs-2 text-warning mb-2 d-block"></i>
+        <div class="fw-semibold">Manage Roles</div>
+        <div class="text-muted small">Roles & permissions</div>
+      </div>
+    </a>
+  </div>
+</div>
