@@ -15,7 +15,8 @@ import { ClientDto, UserDto } from '../../core/models/api.models';
 export class ClientsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
   clients: ClientDto[] = [];
-  users: UserDto[] = [];
+  // Replaced users with pendingClients for dropdown binding
+  pendingClients: UserDto[] = [];
   loading = true;
   saving = false;
   error = '';
@@ -38,8 +39,9 @@ export class ClientsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClients();
-    this.userService.getUsersByType('USER').subscribe(r => {
-      if (r.data) this.users = r.data;
+    // Use new getPendingClients method instead of getUsersByType
+    this.userService.getPendingClients().subscribe(r => {
+      if (r.data) this.pendingClients = r.data;
       this.notifyView();
     });
   }

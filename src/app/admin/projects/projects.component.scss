@@ -1,0 +1,44 @@
+.project-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-width: 92px;
+  justify-content: center;
+  padding: 0.3rem 0.55rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+
+  &.status-new {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+    color: #1e2a45;
+  }
+
+  &.status-in_progress {
+    background: rgba(79,156,249,0.1);
+    border-color: rgba(79,156,249,0.35);
+    color: #0f1f3d;
+  }
+
+  &.status-on_hold {
+    background: #fffbeb;
+    border-color: #f59e0b;
+    color: #78350f;
+  }
+
+  &.status-completed {
+    background: #dcfce7;
+    border-color: #16a34a;
+    color: #14532d;
+  }
+
+  &.status-cancelled {
+    background: #fee2e2;
+    border-color: #dc2626;
+    color: #7f1d1d;
+  }
+}

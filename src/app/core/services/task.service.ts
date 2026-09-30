@@ -8,6 +8,7 @@ import {
   CreateTaskRequest,
   TaskDto,
   UpdateTaskRequest,
+  UpdateTaskStatusRequest,
   UpdateTaskWorkflowStepRequest,
   UpdateTaskWorkflowStepsScheduleRequest
 } from '../models/api.models';
@@ -34,6 +35,10 @@ export class TaskService {
 
   deleteTask(taskId: string): Observable<ApiResponse<null>> {
     return this.api.delete<null>(API_ENDPOINTS.TASKS.BY_ID(taskId));
+  }
+
+  updateTaskStatus(taskId: string, request: UpdateTaskStatusRequest): Observable<ApiResponse<null>> {
+    return this.api.patch<null>(API_ENDPOINTS.TASKS.TASK_STATUS(taskId), request);
   }
 
   updateWorkflowStep(taskId: string, stepId: string, request: UpdateTaskWorkflowStepRequest): Observable<ApiResponse<null>> {

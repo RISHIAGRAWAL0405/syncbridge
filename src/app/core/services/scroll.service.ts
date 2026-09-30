@@ -31,4 +31,5 @@ export class ScrollService {
 
   stop() { this.lenis?.stop(); }
   start() { this.lenis?.start(); }
+  destroy() { this.lenis?.destroy(); this.lenis = null; }
 }

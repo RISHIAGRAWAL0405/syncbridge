@@ -19,6 +19,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
         return authService.refreshToken().pipe(
           switchMap(res => {
             if (res.statusCode === 200 && res.data) {
+              storage.setTokens(res.data.accessToken, res.data.refreshToken);
               const retryReq = req.clone({ setHeaders: { Authorization: `Bearer ${res.data.accessToken}` } });
               return next(retryReq);
             }

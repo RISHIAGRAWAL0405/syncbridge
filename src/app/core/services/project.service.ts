@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiService } from './api.service';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import {
-  ApiResponse, ProjectDto, CreateProjectRequest, UpdateProjectRequest
+  ApiResponse, ProjectDto, CreateProjectRequest, UpdateProjectRequest, UpdateProjectStatusRequest
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -32,6 +32,10 @@ export class ProjectService {
 
   setStatus(projectId: string, isActive: boolean): Observable<ApiResponse<null>> {
     return this.api.patch<null>(API_ENDPOINTS.PROJECTS.STATUS(projectId), undefined, { is_active: String(isActive) });
+  }
+
+  updateProjectStatus(projectId: string, request: UpdateProjectStatusRequest): Observable<ApiResponse<null>> {
+    return this.api.patch<null>(API_ENDPOINTS.PROJECTS.PROJECT_STATUS(projectId), request);
   }
 
   getProjectProfile(projectId: string): Observable<ApiResponse<any>> {

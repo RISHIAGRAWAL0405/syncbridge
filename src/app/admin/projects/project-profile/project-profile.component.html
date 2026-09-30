@@ -1,19 +1,16 @@
-<div class="pp-root" *ngIf="!loading && !error">
+<div class="pp-root">
 
-  <!-- Page Header Bar -->
+  <!-- Top Bar -->
   <div class="pp-topbar">
     <button class="pp-back-btn" (click)="goBack()">
-      <i class="bi bi-arrow-left"></i>
-      <span>Projects</span>
+      <i class="bi bi-arrow-left"></i> Projects
     </button>
-    <div class="pp-topbar-actions">
-      <button class="pp-btn pp-btn-ghost" (click)="toggleProjectStatus()">
-        <i class="bi" [class.bi-toggle-on]="profile?.project?.is_active" [class.bi-toggle-off]="!profile?.project?.is_active"></i>
-        {{ profile?.project?.is_active ? 'Active' : 'Inactive' }}
+    <div class="pp-topbar-actions" *ngIf="profile">
+      <button class="pp-btn pp-btn-ghost" (click)="openCreateTask()">
+        <i class="bi bi-plus-lg"></i> Add Task
       </button>
       <button class="pp-btn pp-btn-primary" (click)="openEditProject()">
-        <i class="bi bi-pencil-square"></i>
-        Edit Project
+        <i class="bi bi-pencil-square"></i> Edit Project
       </button>
     </div>
   </div>
@@ -24,34 +21,22 @@
   </div>
 
   <!-- Error -->
-  <div *ngIf="error && !loading" class="alert alert-danger mx-0">{{ error }}</div>
+  <div *ngIf="error && !loading" class="alert alert-danger">{{ error }}</div>
 
   <ng-container *ngIf="profile && !loading">
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <div class="pp-hero">
       <div class="pp-hero-left">
-        <div class="pp-project-icon">
-          <i class="bi bi-kanban-fill"></i>
-        </div>
+        <div class="pp-project-icon"><i class="bi bi-kanban-fill"></i></div>
         <div>
           <div class="pp-project-code">{{ profile.project.project_code }}</div>
           <h1 class="pp-project-name">{{ profile.project.project_name }}</h1>
           <p class="pp-project-desc" *ngIf="profile.project.description">{{ profile.project.description }}</p>
           <div class="pp-hero-meta">
-            <span class="pp-meta-chip">
-              <i class="bi bi-person-badge"></i>
-              {{ profile.client.client_name }}
-              <span *ngIf="profile.client.company_name" class="pp-meta-sub">· {{ profile.client.company_name }}</span>
-            </span>
-            <span class="pp-meta-chip">
-              <i class="bi bi-calendar3"></i>
-              {{ formatDate(profile.project.start_date) }} — {{ formatDate(profile.project.end_date) }}
-            </span>
-            <span class="pp-meta-chip">
-              <i class="bi bi-clock"></i>
-              {{ getDurationDays(profile.project.start_date, profile.project.end_date) }}
-            </span>
+            <span class="pp-meta-chip"><i class="bi bi-person-badge"></i> {{ profile.client.client_name }}<span *ngIf="profile.client.company_name" class="pp-meta-sub"> · {{ profile.client.company_name }}</span></span>
+            <span class="pp-meta-chip"><i class="bi bi-calendar3"></i> {{ formatDate(profile.project.start_date) }} — {{ formatDate(profile.project.end_date) }}</span>
+            <span class="pp-meta-chip"><i class="bi bi-clock"></i> {{ getDurationDays(profile.project.start_date, profile.project.end_date) }}</span>
           </div>
         </div>
       </div>
@@ -71,59 +56,34 @@
             <span class="pp-ring-sub">Done</span>
           </div>
         </div>
-        <span class="pp-status-badge" [class.active]="profile.project.is_active">
+        <span class="pp-status-badge" [class.active]="profile.project.is_active" (click)="toggleProjectStatus()" style="cursor:pointer">
           <i class="bi" [class.bi-check-circle-fill]="profile.project.is_active" [class.bi-x-circle-fill]="!profile.project.is_active"></i>
           {{ profile.project.is_active ? 'Active' : 'Inactive' }}
         </span>
       </div>
     </div>
 
-    <!-- Stat Cards -->
+    <!-- Stats -->
     <div class="pp-stats">
       <div class="pp-stat-card">
-        <div class="pp-stat-icon" style="background:#eff6ff;color:#4f6ef7">
-          <i class="bi bi-list-task"></i>
-        </div>
-        <div class="pp-stat-body">
-          <div class="pp-stat-value">{{ profile.summary.total_tasks }}</div>
-          <div class="pp-stat-label">Total Tasks</div>
-        </div>
+        <div class="pp-stat-icon" style="background:#eff6ff;color:#4f6ef7"><i class="bi bi-list-task"></i></div>
+        <div class="pp-stat-body"><div class="pp-stat-value">{{ profile.summary.total_tasks }}</div><div class="pp-stat-label">Total Tasks</div></div>
       </div>
       <div class="pp-stat-card">
-        <div class="pp-stat-icon" style="background:#f0fdf4;color:#22c55e">
-          <i class="bi bi-check2-circle"></i>
-        </div>
-        <div class="pp-stat-body">
-          <div class="pp-stat-value" style="color:#22c55e">{{ profile.summary.completed_tasks }}</div>
-          <div class="pp-stat-label">Completed</div>
-        </div>
+        <div class="pp-stat-icon" style="background:#f0fdf4;color:#22c55e"><i class="bi bi-check2-circle"></i></div>
+        <div class="pp-stat-body"><div class="pp-stat-value" style="color:#22c55e">{{ profile.summary.completed_tasks }}</div><div class="pp-stat-label">Completed</div></div>
       </div>
       <div class="pp-stat-card">
-        <div class="pp-stat-icon" style="background:#fffbeb;color:#f59e0b">
-          <i class="bi bi-hourglass-split"></i>
-        </div>
-        <div class="pp-stat-body">
-          <div class="pp-stat-value" style="color:#f59e0b">{{ profile.summary.in_progress_tasks }}</div>
-          <div class="pp-stat-label">In Progress</div>
-        </div>
+        <div class="pp-stat-icon" style="background:#fffbeb;color:#f59e0b"><i class="bi bi-hourglass-split"></i></div>
+        <div class="pp-stat-body"><div class="pp-stat-value" style="color:#f59e0b">{{ profile.summary.in_progress_tasks }}</div><div class="pp-stat-label">In Progress</div></div>
       </div>
       <div class="pp-stat-card">
-        <div class="pp-stat-icon" style="background:#f8f9fa;color:#6c757d">
-          <i class="bi bi-circle"></i>
-        </div>
-        <div class="pp-stat-body">
-          <div class="pp-stat-value">{{ profile.summary.not_started_tasks }}</div>
-          <div class="pp-stat-label">Not Started</div>
-        </div>
+        <div class="pp-stat-icon" style="background:#f8f9fa;color:#6c757d"><i class="bi bi-circle"></i></div>
+        <div class="pp-stat-body"><div class="pp-stat-value">{{ profile.summary.not_started_tasks }}</div><div class="pp-stat-label">Not Started</div></div>
       </div>
       <div class="pp-stat-card" *ngIf="profile.summary.overdue_tasks > 0">
-        <div class="pp-stat-icon" style="background:#fff1f2;color:#ef4444">
-          <i class="bi bi-exclamation-triangle"></i>
-        </div>
-        <div class="pp-stat-body">
-          <div class="pp-stat-value" style="color:#ef4444">{{ profile.summary.overdue_tasks }}</div>
-          <div class="pp-stat-label">Overdue</div>
-        </div>
+        <div class="pp-stat-icon" style="background:#fff1f2;color:#ef4444"><i class="bi bi-exclamation-triangle"></i></div>
+        <div class="pp-stat-body"><div class="pp-stat-value" style="color:#ef4444">{{ profile.summary.overdue_tasks }}</div><div class="pp-stat-label">Overdue</div></div>
       </div>
     </div>
 
@@ -147,19 +107,14 @@
       </div>
     </div>
 
-    <!-- Tasks Section -->
+    <!-- Tasks -->
     <div class="pp-section">
       <div class="pp-section-header">
-        <h2 class="pp-section-title">
-          <i class="bi bi-list-task"></i>
-          Tasks
-          <span class="pp-count-badge">{{ profile.tasks.length }}</span>
-        </h2>
+        <h2 class="pp-section-title"><i class="bi bi-list-task"></i> Tasks <span class="pp-count-badge">{{ profile.tasks.length }}</span></h2>
       </div>
 
       <div class="pp-empty" *ngIf="profile.tasks.length === 0">
-        <i class="bi bi-inbox"></i>
-        <p>No tasks yet</p>
+        <i class="bi bi-inbox"></i><p>No tasks yet. <button class="pp-link-btn" (click)="openCreateTask()">Add one</button></p>
       </div>
 
       <div class="pp-task-list">
@@ -184,24 +139,23 @@
               </div>
               <div class="pp-task-progress-wrap">
                 <div class="pp-task-progress-track">
-                  <div class="pp-task-progress-fill" [style.width.%]="task.progress.percentage"
-                    [class]="'fill-' + getStatusKey(task.status)"></div>
+                  <div class="pp-task-progress-fill" [style.width.%]="task.progress.percentage" [class]="'fill-' + getStatusKey(task.status)"></div>
                 </div>
                 <span class="pp-task-pct">{{ task.progress.percentage }}%</span>
               </div>
               <span class="pp-status-pill" [class]="'pill-' + getStatusKey(task.status)">{{ task.status }}</span>
-              <button class="pp-edit-btn" (click)="openEditTask(task); $event.stopPropagation()" title="Edit task">
-                <i class="bi bi-pencil"></i>
-              </button>
+              <button class="pp-edit-btn" (click)="openEditTask(task); $event.stopPropagation()" title="Edit task"><i class="bi bi-pencil"></i></button>
               <i class="bi pp-chevron" [class.bi-chevron-down]="expandedTaskId !== task.task_id" [class.bi-chevron-up]="expandedTaskId === task.task_id"></i>
             </div>
           </div>
 
-          <!-- Workflow Steps Timeline -->
+          <!-- Expanded: Workflow Steps + Links -->
           <div class="pp-timeline" *ngIf="expandedTaskId === task.task_id">
             <div class="pp-timeline-title">Workflow Steps</div>
             <div class="pp-timeline-list">
               <div class="pp-timeline-item" *ngFor="let step of task.workflow_steps; let last = last" [class.last]="last">
+
+                <!-- Step indicator -->
                 <div class="pp-tl-indicator">
                   <div class="pp-tl-dot" [class]="'dot-' + getStatusKey(step.status)">
                     <i class="bi"
@@ -212,26 +166,88 @@
                   </div>
                   <div class="pp-tl-line" *ngIf="!last"></div>
                 </div>
+
+                <!-- Step body -->
                 <div class="pp-tl-body">
                   <div class="pp-tl-header">
                     <span class="pp-tl-order">{{ step.display_order }}</span>
                     <span class="pp-tl-name">{{ step.step_name }}</span>
                     <span class="pp-status-pill pp-status-pill-sm" [class]="'pill-' + getStatusKey(step.status)">{{ step.status }}</span>
+                    <div class="pp-tl-header-actions">
+                      <button class="pp-icon-btn" (click)="openEditStep(task, step)" title="Edit schedule"><i class="bi bi-calendar3"></i></button>
+                      <button class="pp-icon-btn pp-icon-btn-accent" (click)="openAddLink(task, step)" title="Add link">
+                        <i class="bi bi-link-45deg"></i> Add Link
+                      </button>
+                    </div>
                   </div>
+
                   <div class="pp-tl-dates" *ngIf="step.start_date || step.end_date">
-                    <i class="bi bi-calendar3"></i>
-                    {{ formatDate(step.start_date) }} — {{ formatDate(step.end_date) }}
+                    <i class="bi bi-calendar3"></i> {{ formatDate(step.start_date) }} — {{ formatDate(step.end_date) }}
                   </div>
-                  <div class="pp-tl-actions">
-                    <button class="pp-action-btn pp-action-start" *ngIf="step.status === 'NOT_STARTED'"
-                      (click)="updateStepStatus(step.task_workflow_step_id, 'IN_PROGRESS'); editingTask = task">
-                      <i class="bi bi-play-fill"></i> Start
-                    </button>
-                    <button class="pp-action-btn pp-action-complete" *ngIf="step.status === 'IN_PROGRESS'"
-                      (click)="updateStepStatus(step.task_workflow_step_id, 'COMPLETED'); editingTask = task">
-                      <i class="bi bi-check-lg"></i> Mark Complete
-                    </button>
+
+                  <!-- Status change -->
+                  <div class="pp-tl-status-row" *ngIf="!isTaskLocked(task)">
+                    <label class="pp-tl-status-label">Status:</label>
+                    <select class="pp-status-select" [value]="step.status" (change)="onStepStatusChange(task, step, $event)">
+                      <option *ngFor="let s of stepStatuses" [value]="s">{{ s }}</option>
+                    </select>
                   </div>
+
+                  <!-- ── Links Panel ── -->
+                  <div class="pp-links-panel" *ngIf="step.links && step.links.length > 0 || true">
+                    <div class="pp-links-header" *ngIf="step.links && step.links.length > 0">
+                      <i class="bi bi-paperclip"></i>
+                      <span>Links <span class="pp-count-badge-sm">{{ step.links?.length || 0 }}</span></span>
+                    </div>
+
+                    <div class="pp-links-list" *ngIf="step.links && step.links.length > 0">
+                      <div class="pp-link-item" *ngFor="let link of step.links">
+                        <div class="pp-link-type-icon" [class]="'ltype-' + link.link_type.toLowerCase()">
+                          <i class="bi" [class]="getLinkTypeIcon(link.link_type)"></i>
+                        </div>
+                        <div class="pp-link-body">
+                          <div class="pp-link-title-row">
+                            <a [href]="link.url" target="_blank" rel="noopener" class="pp-link-title">{{ link.title }}</a>
+                            <span class="pp-link-status-badge" [class]="'lstatus-' + getLinkStatusKey(link.status)">
+                              <i class="bi"
+                                [class.bi-clock]="link.status === 'PENDING'"
+                                [class.bi-check-circle-fill]="link.status === 'APPROVED'"
+                                [class.bi-x-circle-fill]="link.status === 'REJECTED'"></i>
+                              {{ link.status }}
+                            </span>
+                          </div>
+                          <div class="pp-link-url">{{ link.url }}</div>
+                          <div class="pp-link-note" *ngIf="link.status_note">
+                            <i class="bi bi-chat-left-text"></i> {{ link.status_note }}
+                          </div>
+                          <div class="pp-link-meta">
+                            <span class="pp-link-type-tag">{{ link.link_type }}</span>
+                            <span>{{ formatDate(link.created_at) }}</span>
+                          </div>
+                        </div>
+                        <div class="pp-link-actions">
+                          <!-- Review buttons -->
+                          <button class="pp-review-btn approve" *ngIf="link.status !== 'APPROVED'" (click)="reviewLink(link, 'APPROVED')" title="Approve">
+                            <i class="bi bi-check-lg"></i>
+                          </button>
+                          <button class="pp-review-btn reject" *ngIf="link.status !== 'REJECTED'" (click)="reviewLink(link, 'REJECTED')" title="Reject">
+                            <i class="bi bi-x-lg"></i>
+                          </button>
+                          <button class="pp-review-btn pending" *ngIf="link.status !== 'PENDING'" (click)="reviewLink(link, 'PENDING')" title="Reset to Pending">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                          </button>
+                          <!-- Edit / Delete -->
+                          <button class="pp-icon-btn" (click)="openEditLink(task, step, link)" title="Edit link"><i class="bi bi-pencil"></i></button>
+                          <button class="pp-icon-btn pp-icon-btn-danger" (click)="deleteLink(link)" title="Delete link"><i class="bi bi-trash3"></i></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="pp-links-empty" *ngIf="!step.links || step.links.length === 0">
+                      <i class="bi bi-link-45deg"></i> No links yet
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -243,42 +259,25 @@
 
   </ng-container>
 
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <!-- Edit Project Modal -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <div class="pp-modal-overlay" *ngIf="showEditModal" (click)="showEditModal=false"></div>
   <div class="pp-modal" *ngIf="showEditModal">
     <div class="pp-modal-header">
-      <h5>Edit Project</h5>
+      <h5><i class="bi bi-pencil-square me-2"></i>Edit Project</h5>
       <button class="pp-modal-close" (click)="showEditModal=false"><i class="bi bi-x-lg"></i></button>
     </div>
     <div class="pp-modal-body">
       <form [formGroup]="editForm" (ngSubmit)="saveProjectEdit()">
         <div class="pp-form-row">
-          <div class="pp-form-group pp-col-8">
-            <label>Project Name *</label>
-            <input type="text" class="form-control form-control-sm" formControlName="project_name">
-          </div>
-          <div class="pp-form-group pp-col-4">
-            <label>Code</label>
-            <input type="text" class="form-control form-control-sm" formControlName="project_code">
-          </div>
+          <div class="pp-form-group pp-col-8"><label>Project Name *</label><input type="text" class="form-control form-control-sm" formControlName="project_name"></div>
+          <div class="pp-form-group pp-col-4"><label>Code</label><input type="text" class="form-control form-control-sm" formControlName="project_code"></div>
         </div>
-        <div class="pp-form-group">
-          <label>Description</label>
-          <textarea class="form-control form-control-sm" formControlName="description" rows="3"></textarea>
-        </div>
+        <div class="pp-form-group"><label>Description</label><textarea class="form-control form-control-sm" formControlName="description" rows="3"></textarea></div>
         <div class="pp-form-row">
-          <div class="pp-form-group pp-col-6">
-            <label>Start Date</label>
-            <input type="date" class="form-control form-control-sm" formControlName="start_date">
-          </div>
-          <div class="pp-form-group pp-col-6">
-            <label>End Date</label>
-            <input type="date" class="form-control form-control-sm" formControlName="end_date">
-          </div>
-        </div>
-        <div class="pp-form-check">
-          <input type="checkbox" class="form-check-input" formControlName="is_active" id="pp_is_active">
-          <label for="pp_is_active">Active</label>
+          <div class="pp-form-group pp-col-6"><label>Start Date</label><input type="date" class="form-control form-control-sm" formControlName="start_date"></div>
+          <div class="pp-form-group pp-col-6"><label>End Date</label><input type="date" class="form-control form-control-sm" formControlName="end_date"></div>
         </div>
         <div class="pp-modal-footer">
           <button type="button" class="pp-btn pp-btn-ghost" (click)="showEditModal=false">Cancel</button>
@@ -288,42 +287,139 @@
     </div>
   </div>
 
-  <!-- Edit Task Modal -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Add / Edit Task Modal -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
   <div class="pp-modal-overlay" *ngIf="showTaskModal" (click)="showTaskModal=false"></div>
   <div class="pp-modal" *ngIf="showTaskModal">
     <div class="pp-modal-header">
-      <h5>Edit Task</h5>
+      <h5><i class="bi bi-list-task me-2"></i>{{ editingTask ? 'Edit Task' : 'Add Task' }}</h5>
       <button class="pp-modal-close" (click)="showTaskModal=false"><i class="bi bi-x-lg"></i></button>
     </div>
     <div class="pp-modal-body">
+      <div *ngIf="taskError" class="alert alert-danger py-2 small mb-3">{{ taskError }}</div>
       <form [formGroup]="taskForm" (ngSubmit)="saveTask()">
-        <div class="pp-form-row">
-          <div class="pp-form-group pp-col-8">
-            <label>Task Name *</label>
-            <input type="text" class="form-control form-control-sm" formControlName="task_name">
-          </div>
-          <div class="pp-form-group pp-col-4">
-            <label>Code</label>
-            <input type="text" class="form-control form-control-sm" formControlName="task_code">
-          </div>
-        </div>
-        <div class="pp-form-group">
-          <label>Description</label>
-          <textarea class="form-control form-control-sm" formControlName="description" rows="3"></textarea>
+        <div class="pp-form-group" *ngIf="!editingTask">
+          <label>Workflow Template *</label>
+          <select class="form-select form-select-sm" formControlName="workflow_template_id">
+            <option value="">— Select Template —</option>
+            <option *ngFor="let t of workflowTemplates" [value]="t.workflow_template_id">{{ t.workflow_template_name }}</option>
+          </select>
         </div>
         <div class="pp-form-row">
-          <div class="pp-form-group pp-col-6">
-            <label>Start Date</label>
-            <input type="date" class="form-control form-control-sm" formControlName="start_date">
-          </div>
-          <div class="pp-form-group pp-col-6">
-            <label>End Date</label>
-            <input type="date" class="form-control form-control-sm" formControlName="end_date">
-          </div>
+          <div class="pp-form-group pp-col-8"><label>Task Name *</label><input type="text" class="form-control form-control-sm" formControlName="task_name"></div>
+          <div class="pp-form-group pp-col-4"><label>Code</label><input type="text" class="form-control form-control-sm" formControlName="task_code"></div>
+        </div>
+        <div class="pp-form-group"><label>Description</label><textarea class="form-control form-control-sm" formControlName="description" rows="2"></textarea></div>
+        <div class="pp-form-row">
+          <div class="pp-form-group pp-col-6"><label>Start Date</label><input type="date" class="form-control form-control-sm" formControlName="start_date"></div>
+          <div class="pp-form-group pp-col-6"><label>End Date</label><input type="date" class="form-control form-control-sm" formControlName="end_date"></div>
         </div>
         <div class="pp-modal-footer">
           <button type="button" class="pp-btn pp-btn-ghost" (click)="showTaskModal=false">Cancel</button>
-          <button type="submit" class="pp-btn pp-btn-primary">Save Changes</button>
+          <button type="submit" class="pp-btn pp-btn-primary" [disabled]="taskSaving">
+            <span *ngIf="taskSaving" class="spinner-border spinner-border-sm me-1"></span>
+            {{ taskSaving ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Edit Step Schedule Modal -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="pp-modal-overlay" *ngIf="showStepModal" (click)="showStepModal=false"></div>
+  <div class="pp-modal pp-modal-sm" *ngIf="showStepModal">
+    <div class="pp-modal-header">
+      <h5><i class="bi bi-calendar3 me-2"></i>Step Schedule — {{ editingStep?.step_name }}</h5>
+      <button class="pp-modal-close" (click)="showStepModal=false"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="pp-modal-body">
+      <div *ngIf="stepError" class="alert alert-danger py-2 small mb-3">{{ stepError }}</div>
+      <form [formGroup]="stepForm" (ngSubmit)="saveStep()">
+        <div class="pp-form-row">
+          <div class="pp-form-group pp-col-6"><label>Start Date</label><input type="date" class="form-control form-control-sm" formControlName="start_date"></div>
+          <div class="pp-form-group pp-col-6"><label>End Date</label><input type="date" class="form-control form-control-sm" formControlName="end_date"></div>
+        </div>
+        <div class="pp-form-group"><label>Notes</label><textarea class="form-control form-control-sm" formControlName="notes" rows="3"></textarea></div>
+        <div class="pp-modal-footer">
+          <button type="button" class="pp-btn pp-btn-ghost" (click)="showStepModal=false">Cancel</button>
+          <button type="submit" class="pp-btn pp-btn-primary" [disabled]="stepSaving">
+            <span *ngIf="stepSaving" class="spinner-border spinner-border-sm me-1"></span>
+            {{ stepSaving ? 'Saving...' : 'Save' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- Add / Edit Link Modal -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="pp-modal-overlay" *ngIf="showLinkModal" (click)="showLinkModal=false"></div>
+  <div class="pp-side-modal" *ngIf="showLinkModal">
+    <div class="pp-modal-header">
+      <div>
+        <h5><i class="bi bi-link-45deg me-2"></i>{{ editingLink ? 'Edit Link' : 'Add Link' }}</h5>
+        <div class="pp-modal-subtitle" *ngIf="linkStep">Step: {{ linkStep.step_name }}</div>
+      </div>
+      <button class="pp-modal-close" (click)="showLinkModal=false"><i class="bi bi-x-lg"></i></button>
+    </div>
+    <div class="pp-modal-body">
+      <div *ngIf="linkError" class="alert alert-danger py-2 small mb-3">{{ linkError }}</div>
+      <form [formGroup]="linkForm" (ngSubmit)="saveLink()">
+
+        <!-- Category (auto-filled from step name) -->
+        <div class="pp-form-group">
+          <label>Category</label>
+          <input type="text" class="form-control form-control-sm" formControlName="category" placeholder="e.g. Approval">
+          <div class="pp-field-hint">Defaults to step name. Use <strong>Approval</strong> to allow client approve/reject.</div>
+        </div>
+
+        <!-- Type selector -->
+        <div class="pp-form-group">
+          <label>Link Type *</label>
+          <div class="pp-type-selector">
+            <label *ngFor="let t of linkTypes" class="pp-type-option" [class.selected]="linkForm.get('link_type')?.value === t">
+              <input type="radio" formControlName="link_type" [value]="t" style="display:none">
+              <i class="bi" [class]="getLinkTypeIcon(t)"></i>
+              <span>{{ t }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="pp-form-group">
+          <label>Title *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="title" placeholder="e.g. Final Edit Video v2">
+          <div class="pp-field-error" *ngIf="linkForm.get('title')?.invalid && linkForm.get('title')?.touched">Title is required</div>
+        </div>
+
+        <div class="pp-form-group">
+          <label>URL *</label>
+          <div class="pp-url-input-wrap">
+            <i class="bi bi-link-45deg pp-url-icon"></i>
+            <input type="url" class="form-control form-control-sm pp-url-input" formControlName="url" placeholder="https://...">
+          </div>
+          <div class="pp-field-error" *ngIf="linkForm.get('url')?.invalid && linkForm.get('url')?.touched">Valid URL is required</div>
+        </div>
+
+        <div class="pp-form-group">
+          <label>Description <span class="pp-optional">(optional)</span></label>
+          <textarea class="form-control form-control-sm" formControlName="description" rows="2" placeholder="Brief note about this link..."></textarea>
+        </div>
+
+        <div class="pp-link-status-note" *ngIf="editingLink">
+          <i class="bi bi-info-circle"></i>
+          Status will be reset to <strong>PENDING</strong> after editing.
+        </div>
+
+        <div class="pp-modal-footer">
+          <button type="button" class="pp-btn pp-btn-ghost" (click)="showLinkModal=false">Cancel</button>
+          <button type="submit" class="pp-btn pp-btn-primary" [disabled]="linkSaving">
+            <span *ngIf="linkSaving" class="spinner-border spinner-border-sm me-1"></span>
+            {{ linkSaving ? 'Saving...' : (editingLink ? 'Update Link' : 'Add Link') }}
+          </button>
         </div>
       </form>
     </div>

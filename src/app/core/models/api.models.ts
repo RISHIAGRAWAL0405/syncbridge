@@ -206,9 +206,12 @@ export interface ProjectDto {
   description: string;
   start_date: string | null;
   end_date: string | null;
+  status?: ProjectStatus;
   is_active: boolean;
   created_at: string;
 }
+
+export type ProjectStatus = 'NEW' | 'IN_PROGRESS' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
 
 export interface CreateProjectRequest {
   client_id: string;
@@ -217,6 +220,7 @@ export interface CreateProjectRequest {
   description?: string | null;
   start_date?: string | null;
   end_date?: string | null;
+  status?: ProjectStatus | null;
 }
 
 export interface UpdateProjectRequest {
@@ -225,6 +229,17 @@ export interface UpdateProjectRequest {
   description?: string | null;
   start_date?: string | null;
   end_date?: string | null;
+  status?: ProjectStatus | null;
+}
+
+export interface UpdateProjectStatusRequest {
+  status: ProjectStatus;
+}
+
+export type TaskStatus = 'NEW' | 'IN_PROGRESS' | 'ON_HOLD' | 'COMPLETED' | 'CANCELLED';
+
+export interface UpdateTaskStatusRequest {
+  status: TaskStatus;
 }
 
 // Task Models
@@ -242,6 +257,21 @@ export interface TaskWorkflowStepDto {
   status?: string;
   started_at?: string | null;
   completed_at?: string | null;
+  links?: StepLinkDto[];
+}
+
+export interface StepLinkDto {
+  link_id: string;
+  task_workflow_step_id: string;
+  task_id: string;
+  category: string;
+  title: string;
+  url: string;
+  link_type: string;
+  description?: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  status_note?: string;
+  created_at: string;
 }
 
 export interface CalendarTaskDto {
@@ -270,6 +300,7 @@ export interface TaskDto {
   description: string;
   start_date: string | null;
   end_date: string | null;
+  status?: TaskStatus;
   created_at: string;
   workflow_steps?: TaskWorkflowStepDto[];
 }

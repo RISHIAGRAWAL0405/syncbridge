@@ -4,14 +4,15 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } 
 import { finalize } from 'rxjs';
 import { ProjectService } from '../../core/services/project.service';
 import { ClientService } from '../../core/services/client.service';
-import { ProjectDto, ClientDto } from '../../core/models/api.models';
+import { ProjectDto, ClientDto, ProjectStatus } from '../../core/models/api.models';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
-  templateUrl: './projects.component.html'
+  templateUrl: './projects.component.html',
+  styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
   private cdr = inject(ChangeDetectorRef);
@@ -23,6 +24,7 @@ export class ProjectsComponent implements OnInit {
   success = '';
   showModal = false;
   editingProject: ProjectDto | null = null;
+  readonly projectStatuses: ProjectStatus[] = ['NEW', 'IN_PROGRESS', 'ON_HOLD', 'COMPLETED', 'CANCELLED'];
   form: FormGroup;
   searchTerm = '';
 
@@ -33,7 +35,8 @@ export class ProjectsComponent implements OnInit {
       project_code: [''],
       description: [''],
       start_date: [''],
-      end_date: ['']
+      end_date: [''],
+      status: ['NEW', Validators.required]
     });
   }
 
@@ -59,7 +62,7 @@ export class ProjectsComponent implements OnInit {
 
   openCreate(): void {
     this.editingProject = null;
-    this.form.reset();
+    this.form.reset({ status: 'NEW' });
     this.form.get('client_id')?.enable();
     this.showModal = true;
     this.error = '';

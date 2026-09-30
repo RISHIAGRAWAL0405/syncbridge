@@ -2,10 +2,10 @@
 $sidebar-width: 248px;
 $sidebar-collapsed: 64px;
 $topbar-height: 60px;
-$sidebar-bg: #0f1117;
-$sidebar-border: rgba(255,255,255,0.07);
-$accent: #4f6ef7;
-$accent-light: rgba(79,110,247,0.12);
+$sidebar-bg: #0f1f3d;
+$sidebar-border: rgba(255,255,255,0.08);
+$accent: #4f9cf9;
+$accent-light: rgba(79,156,249,0.14);
 
 :host {
   display: block;
@@ -21,7 +21,7 @@ $accent-light: rgba(79,110,247,0.12);
   display: flex;
   height: 100vh;
   overflow: hidden;
-  background: #f4f6fb;
+  background: #f5f7fb;
 }
 
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
@@ -50,7 +50,7 @@ $accent-light: rgba(79,110,247,0.12);
   .sb-brand-icon {
     width: 32px;
     height: 32px;
-    background: $accent;
+    background: linear-gradient(135deg, $accent, #2f82f0);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -113,13 +113,13 @@ $accent-light: rgba(79,110,247,0.12);
   i { font-size: 1rem; flex-shrink: 0; min-width: 1rem; }
 
   &:hover {
-    background: rgba(255,255,255,0.07);
+    background: rgba(79,156,249,0.1);
     color: #fff;
   }
 
   &.active {
     background: $accent-light;
-    color: #7b9bff;
+    color: $accent;
     font-weight: 600;
 
     i { color: $accent; }
@@ -140,7 +140,7 @@ $accent-light: rgba(79,110,247,0.12);
   width: 34px;
   height: 34px;
   min-width: 34px;
-  background: $accent;
+  background: linear-gradient(135deg, $accent, #2f82f0);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -206,7 +206,7 @@ $accent-light: rgba(79,110,247,0.12);
 .sb-topbar {
   height: $topbar-height;
   background: #fff;
-  border-bottom: 1px solid #e8ecf0;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -228,7 +228,7 @@ $accent-light: rgba(79,110,247,0.12);
   transition: all 0.18s;
   flex-shrink: 0;
 
-  &:hover { background: #f0f4ff; color: #4f6ef7; }
+  &:hover { background: rgba(79,156,249,0.08); color: $accent; }
 }
 
 .sb-breadcrumb { flex: 1; }
@@ -236,7 +236,8 @@ $accent-light: rgba(79,110,247,0.12);
 .sb-page-title {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #1a1d23;
+  color: #1e2a45;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
 }
 
 .sb-topbar-right { display: flex; align-items: center; gap: 0.75rem; }
@@ -244,7 +245,7 @@ $accent-light: rgba(79,110,247,0.12);
 .sb-topbar-avatar {
   width: 34px;
   height: 34px;
-  background: $accent;
+  background: linear-gradient(135deg, $accent, #2f82f0);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -261,7 +262,7 @@ $accent-light: rgba(79,110,247,0.12);
   overflow-y: auto;
   overflow-x: hidden;
   padding: 1.75rem;
-  background: #f4f6fb;
+  background: #f5f7fb;
 }
 
 // ─── Collapsed State ──────────────────────────────────────────────────────────

@@ -87,7 +87,7 @@
           <select class="form-select form-select-sm" formControlName="client_id"
             [class.is-invalid]="f['client_id'].invalid && f['client_id'].touched">
             <option value="">— Select User —</option>
-            <option *ngFor="let u of users" [value]="u.user_id">{{ u.full_name }} ({{ u.email }})</option>
+            <option *ngFor="let u of pendingClients" [value]="u.user_id">{{ u.full_name }} ({{ u.email }})</option>
           </select>
           <div class="invalid-feedback">Required</div>
         </div>

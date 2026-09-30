@@ -34,7 +34,7 @@ export class LoginComponent {
         if (res.statusCode === 200) {
           const userType = res.data?.user?.userType;
           if (userType === 'CLIENT') {
-            this.router.navigate(['/client/calendar']);
+            this.router.navigate(['/client/dashboard']);
           } else {
             this.router.navigate(['/']);
           }

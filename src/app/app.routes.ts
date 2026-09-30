@@ -33,11 +33,16 @@ export const routes: Routes = [
     canActivate: [clientGuard],
     children: [
       {
+        path: 'dashboard',
+        loadComponent: () => import('./client/dashboard/dashboard.component').then(m => m.ClientDashboardComponent),
+        title: 'Dashboard | Sync Bridge'
+      },
+      {
         path: 'calendar',
         loadComponent: () => import('./client/calendar/calendar.component').then(m => m.ClientCalendarComponent),
         title: 'My Calendar | Sync Bridge'
       },
-      { path: '', redirectTo: 'calendar', pathMatch: 'full' }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
     ]
   },
 

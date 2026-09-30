@@ -9,6 +9,30 @@ import { RouterLink } from '@angular/router';
   styleUrl: './about.component.scss'
 })
 export class AboutComponent {
+  teamMembers = [
+    {
+      number: '01',
+      name: 'Anubhav Soni',
+      role: 'Founder',
+      description: 'Founder driving the vision, strategy, and growth of the company with a strong focus on innovation and digital transformation.',
+      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80'
+    },
+    {
+      number: '02',
+      name: 'Aksh Puri',
+      role: 'Co-Founder',
+      description: 'Co-Founder focused on building meaningful digital experiences, business growth, and turning ideas into scalable solutions.',
+      image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80'
+    },
+    {
+      number: '03',
+      name: 'Rishi Agrawal',
+      role: 'Chief Technology Officer',
+      description: 'CTO leading technology, engineering, architecture, and the development of scalable and reliable digital products.',
+      image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80'
+    }
+  ];
+
   stats = [
     { num: '10+', label: 'Years Experience' },
     { num: '500+', label: 'Happy Clients' },

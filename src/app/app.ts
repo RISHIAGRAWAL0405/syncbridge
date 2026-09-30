@@ -29,12 +29,17 @@ export class App implements OnInit {
       if (e instanceof NavigationStart) {
         this.transitioning.set(true);
         const url = e.url;
-        this.isPublicRoute.set(!url.startsWith('/admin') && !url.startsWith('/auth'));
+        this.isPublicRoute.set(!url.startsWith('/admin') && !url.startsWith('/client') && !url.startsWith('/auth'));
       }
       if (e instanceof NavigationEnd) {
         const url = e.urlAfterRedirects;
-        this.isPublicRoute.set(!url.startsWith('/admin') && !url.startsWith('/auth'));
-        window.scrollTo(0, 0);
+        this.isPublicRoute.set(!url.startsWith('/admin') && !url.startsWith('/client') && !url.startsWith('/auth'));
+        if (this.isPublicRoute()) {
+          this.scroll.init();
+          window.scrollTo(0, 0);
+        } else {
+          this.scroll.destroy();
+        }
         setTimeout(() => {
           this.transitioning.set(false);
           if (this.isPublicRoute()) this.anim.observeAll();
@@ -45,9 +50,9 @@ export class App implements OnInit {
     if (this.isPublicRoute()) {
       this.scroll.init();
       this.anim.initReveal();
-      // The initial routed component is rendered after App's first lifecycle hook.
-      // Observe on the next tick so `.reveal` elements are not left transparent.
       setTimeout(() => this.anim.observeAll());
+    } else {
+      this.scroll.destroy();
     }
   }
 }

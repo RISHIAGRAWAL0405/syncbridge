@@ -49,4 +49,10 @@ export class UserService {
   verifyEmail(userId: string, otpCode: string): Observable<ApiResponse<null>> {
     return this.api.post<null>(API_ENDPOINTS.USERS.VERIFY_EMAIL, { user_id: userId, otp_code: otpCode });
   }
+
+  // New method to retrieve pending clients for add client dropdown
+  getPendingClients(): Observable<ApiResponse<UserDto[]>> {
+    // Directly using the endpoint as it is not defined in API_ENDPOINTS yet
+    return this.api.get<UserDto[]>('/Users/pending-clients');
+  }
 }

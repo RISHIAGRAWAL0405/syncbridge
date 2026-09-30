@@ -1,0 +1,196 @@
+<div class="cd-root">
+
+  <!-- Loading -->
+  <div class="cd-loading" *ngIf="loading">
+    <div class="cd-spinner"></div>
+    <span>Loading your dashboard…</span>
+  </div>
+
+  <ng-container *ngIf="!loading">
+
+    <!-- ── Header ── -->
+    <div class="cd-header">
+      <div class="cd-header-left">
+        <div class="cd-avatar">{{ initials }}</div>
+        <div>
+          <div class="cd-greeting">{{ greeting }}, <strong>{{ user?.firstName || 'Client' }}</strong> 👋</div>
+          <div class="cd-sub">Here's what's happening with your projects today.</div>
+        </div>
+      </div>
+      <div class="cd-header-right">
+        <div class="cd-overall-pill">
+          <span class="cd-overall-label">Overall Progress</span>
+          <span class="cd-overall-pct">{{ data?.overallProgress ?? 0 }}%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Summary Cards ── -->
+    <div class="cd-cards">
+      <div class="cd-card cd-card-blue">
+        <div class="cd-card-icon"><i class="bi bi-briefcase-fill"></i></div>
+        <div class="cd-card-body">
+          <div class="cd-card-value">{{ data?.totalProjects ?? 0 }}</div>
+          <div class="cd-card-label">Total Projects</div>
+          <div class="cd-card-sub">{{ data?.activeProjects ?? 0 }} active</div>
+        </div>
+      </div>
+      <div class="cd-card cd-card-green">
+        <div class="cd-card-icon"><i class="bi bi-check2-circle"></i></div>
+        <div class="cd-card-body">
+          <div class="cd-card-value">{{ data?.completedTasks ?? 0 }}</div>
+          <div class="cd-card-label">Completed Tasks</div>
+          <div class="cd-card-sub">of {{ data?.totalTasks ?? 0 }} total</div>
+        </div>
+      </div>
+      <div class="cd-card cd-card-amber" [class.cd-card-alert]="(data?.pendingApprovals ?? 0) > 0">
+        <div class="cd-card-icon"><i class="bi bi-hourglass-split"></i></div>
+        <div class="cd-card-body">
+          <div class="cd-card-value">{{ data?.pendingApprovals ?? 0 }}</div>
+          <div class="cd-card-label">Pending Approvals</div>
+          <div class="cd-card-sub">awaiting your review</div>
+        </div>
+        <div class="cd-card-badge" *ngIf="(data?.pendingApprovals ?? 0) > 0">Action needed</div>
+      </div>
+      <div class="cd-card cd-card-red" [class.cd-card-alert]="(data?.overdueTasks ?? 0) > 0">
+        <div class="cd-card-icon"><i class="bi bi-exclamation-triangle-fill"></i></div>
+        <div class="cd-card-body">
+          <div class="cd-card-value">{{ data?.overdueTasks ?? 0 }}</div>
+          <div class="cd-card-label">Overdue Tasks</div>
+          <div class="cd-card-sub">need attention</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Main Grid ── -->
+    <div class="cd-grid">
+
+      <!-- Left: Donut Chart + Projects -->
+      <div class="cd-col-left">
+
+        <!-- Task Status Chart -->
+        <div class="cd-panel">
+          <div class="cd-panel-header">
+            <span class="cd-panel-title"><i class="bi bi-pie-chart-fill"></i> Task Overview</span>
+          </div>
+          <div class="cd-chart-wrap">
+            <svg class="cd-donut" viewBox="0 0 140 140">
+              <circle cx="70" cy="70" r="54" fill="none" stroke="#f1f5f9" stroke-width="16"/>
+              <ng-container *ngFor="let seg of donutSegments">
+                <circle *ngIf="seg.count > 0"
+                  cx="70" cy="70" r="54" fill="none"
+                  [attr.stroke]="seg.color"
+                  stroke-width="16"
+                  stroke-linecap="butt"
+                  [attr.stroke-dasharray]="seg.dash + ' ' + (339.3 - seg.dash)"
+                  [attr.stroke-dashoffset]="seg.offset"
+                  transform="rotate(-90 70 70)"/>
+              </ng-container>
+              <text x="70" y="65" text-anchor="middle" class="cd-donut-pct">{{ data?.overallProgress ?? 0 }}%</text>
+              <text x="70" y="82" text-anchor="middle" class="cd-donut-sub">complete</text>
+            </svg>
+            <div class="cd-legend">
+              <div class="cd-legend-item" *ngFor="let seg of donutSegments">
+                <span class="cd-legend-dot" [style.background]="seg.color"></span>
+                <span class="cd-legend-label">{{ seg.label }}</span>
+                <span class="cd-legend-count">{{ seg.count }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects List -->
+        <div class="cd-panel">
+          <div class="cd-panel-header">
+            <span class="cd-panel-title"><i class="bi bi-kanban-fill"></i> My Projects</span>
+            <span class="cd-count-badge">{{ data?.projects?.length ?? 0 }}</span>
+          </div>
+
+          <div class="cd-empty" *ngIf="!data?.projects?.length">
+            <i class="bi bi-inbox"></i>
+            <p>No projects assigned yet.</p>
+          </div>
+
+          <div class="cd-project-list">
+            <div class="cd-project-item" *ngFor="let p of data?.projects">
+              <div class="cd-project-top">
+                <div class="cd-project-info">
+                  <div class="cd-project-name">{{ p.projectName }}</div>
+                  <div class="cd-project-meta">
+                    <span class="cd-project-code">{{ p.projectCode }}</span>
+                    <span class="cd-status-pill" [class]="statusClass(p.status)">{{ statusLabel(p.status) }}</span>
+                  </div>
+                </div>
+                <div class="cd-project-pct">{{ p.progress }}%</div>
+              </div>
+              <div class="cd-progress-track">
+                <div class="cd-progress-fill"
+                  [style.width.%]="p.progress"
+                  [class.fill-done]="p.progress >= 100"
+                  [class.fill-mid]="p.progress >= 50 && p.progress < 100"
+                  [class.fill-low]="p.progress < 50">
+                </div>
+              </div>
+              <div class="cd-project-footer">
+                <span><i class="bi bi-list-task"></i> {{ p.completedTasks }}/{{ p.totalTasks }} tasks</span>
+                <span *ngIf="p.endDate"><i class="bi bi-calendar3"></i> Due {{ formatDate(p.endDate) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: Pending Approvals -->
+      <div class="cd-col-right">
+        <div class="cd-panel cd-panel-approvals">
+          <div class="cd-panel-header">
+            <span class="cd-panel-title">
+              <i class="bi bi-bell-fill"></i> Pending Approvals
+            </span>
+            <span class="cd-count-badge cd-count-badge-alert" *ngIf="(data?.pendingApprovals ?? 0) > 0">
+              {{ data?.pendingApprovals }}
+            </span>
+          </div>
+
+          <div class="cd-empty" *ngIf="!data?.pendingLinks?.length">
+            <i class="bi bi-check-circle"></i>
+            <p>All caught up! No pending approvals.</p>
+          </div>
+
+          <div class="cd-approval-list">
+            <div class="cd-approval-item" *ngFor="let link of data?.pendingLinks">
+              <div class="cd-approval-type-icon" [class]="'ltype-' + link.linkType.toLowerCase()">
+                <i class="bi" [class]="linkTypeIcon(link.linkType)"></i>
+              </div>
+              <div class="cd-approval-body">
+                <div class="cd-approval-title">
+                  <a [href]="link.url" target="_blank" rel="noopener">{{ link.title }}</a>
+                  <span class="cd-link-type-tag">{{ link.linkType }}</span>
+                </div>
+                <div class="cd-approval-meta">
+                  <span class="cd-approval-project">{{ link.projectName }}</span>
+                  <span class="cd-approval-sep">·</span>
+                  <span>{{ link.taskName }}</span>
+                  <span class="cd-approval-sep">·</span>
+                  <span class="cd-approval-step">{{ link.stepName }}</span>
+                </div>
+                <div class="cd-approval-date"><i class="bi bi-clock"></i> {{ formatDate(link.createdAt) }}</div>
+              </div>
+              <div class="cd-approval-actions">
+                <button class="cd-btn-approve" (click)="approve(link)" title="Approve">
+                  <i class="bi bi-check-lg"></i> Approve
+                </button>
+                <button class="cd-btn-reject" (click)="reject(link)" title="Reject">
+                  <i class="bi bi-x-lg"></i> Reject
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </ng-container>
+</div>

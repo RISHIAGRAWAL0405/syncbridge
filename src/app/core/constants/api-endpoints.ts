@@ -58,6 +58,7 @@ export const API_ENDPOINTS = {
     BY_ID: (id: string) => `/Projects/${id}`,
     BY_CLIENT: (clientId: string) => `/Projects/by-client/${clientId}`,
     STATUS: (id: string) => `/Projects/${id}/status`,
+    PROJECT_STATUS: (id: string) => `/Projects/${id}/project-status`,
     PROFILE: (id: string) => `/Projects/${id}/profile`
   },
 
@@ -67,6 +68,7 @@ export const API_ENDPOINTS = {
     BY_ID: (id: string) => `/Tasks/${id}`,
     BY_PROJECT: (projectId: string) => `/Tasks/by-project/${projectId}`,
     CALENDAR: (year: number, month: number) => `/Tasks/calendar?year=${year}&month=${month}`,
+    TASK_STATUS: (id: string) => `/Tasks/${id}/task-status`,
     WORKFLOW_STEP: (taskId: string, stepId: string) => `/Tasks/${taskId}/workflow-steps/${stepId}`,
     WORKFLOW_STEP_STATUS: (taskId: string, stepId: string) => `/Tasks/${taskId}/workflow-steps/${stepId}/status`,
     WORKFLOW_STEPS_SCHEDULE: (taskId: string) => `/Tasks/${taskId}/workflow-steps/schedule`
@@ -78,6 +80,16 @@ export const API_ENDPOINTS = {
     BY_ID: (id: string) => `/WorkflowSteps/${id}`,
     ACTIVE: '/WorkflowSteps/active',
     STATUS: (id: string) => `/WorkflowSteps/${id}/status`
+  },
+
+  // Client Dashboard
+  CLIENT_DASHBOARD: {
+    GET: '/ClientDashboard'
+  },
+
+  // Admin Dashboard
+  ADMIN_DASHBOARD: {
+    GET: '/AdminDashboard'
   },
 
   // Workflow Templates
