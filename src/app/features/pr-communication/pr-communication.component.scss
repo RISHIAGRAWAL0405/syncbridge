@@ -530,3 +530,446 @@
   flex-wrap: wrap;
   flex-shrink: 0;
 }
+
+// ─── Mobile Reel Section ──────────────────────────────────────────────────────
+.pr-reel-section {
+  padding: 7rem 0;
+  background: var(--tz-white);
+  overflow: hidden;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(79,156,249,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.pr-reel-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+
+  @media (max-width: 1024px) { gap: 3.5rem; }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+// ─── Left Copy ────────────────────────────────────────────────────────────────
+.pr-reel-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+
+  @media (max-width: 768px) { order: 2; }
+}
+
+.pr-reel-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--tz-charcoal);
+}
+
+.pr-reel-accent {
+  color: var(--tz-lime);
+  position: relative;
+  display: inline-block;
+}
+
+.pr-reel-desc {
+  font-size: 1.05rem;
+  color: var(--tz-text-muted);
+  line-height: 1.8;
+  max-width: 460px;
+}
+
+.pr-reel-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--tz-charcoal);
+
+    svg {
+      color: var(--tz-lime);
+      flex-shrink: 0;
+    }
+  }
+}
+
+// ─── Phone Wrap ───────────────────────────────────────────────────────────────
+.pr-reel-phone-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 2rem;
+
+  @media (max-width: 768px) {
+    order: 1;
+    padding: 2rem 1rem;
+  }
+}
+
+// ─── Decorative blobs ─────────────────────────────────────────────────────────
+.pr-reel-blob {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+
+  &--1 {
+    width: 320px;
+    height: 320px;
+    background: radial-gradient(circle, rgba(79,156,249,0.12) 0%, transparent 70%);
+    top: 0; right: 0;
+  }
+
+  &--2 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(15,31,61,0.06) 0%, transparent 70%);
+    bottom: 0; left: 0;
+  }
+}
+
+// ─── Phone Frame — NEVER MOVES ────────────────────────────────────────────────
+.pr-phone {
+  position: relative;
+  z-index: 1;
+  width: 280px;
+  height: 580px;
+  background: linear-gradient(145deg, #1a1a2e 0%, #0f1f3d 60%, #0b1a33 100%);
+  border-radius: 44px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 2px rgba(15,31,61,0.6),
+    0 32px 80px rgba(15,31,61,0.45),
+    0 8px 24px rgba(15,31,61,0.3),
+    inset 0 1px 0 rgba(255,255,255,0.12);
+  flex-shrink: 0;
+
+  // Inner bezel highlight
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 42px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  @media (max-width: 480px) {
+    width: 240px;
+    height: 496px;
+    border-radius: 38px;
+  }
+}
+
+// ─── Dynamic Island / Notch ───────────────────────────────────────────────────
+.pr-phone-notch {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 26px;
+  background: #0a0a14;
+  border-radius: 20px;
+  z-index: 20;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06);
+
+  @media (max-width: 480px) {
+    width: 76px;
+    height: 22px;
+  }
+}
+
+// ─── Side Buttons ─────────────────────────────────────────────────────────────
+.pr-phone-btn {
+  position: absolute;
+  background: linear-gradient(180deg, #1e2a45 0%, #0f1f3d 100%);
+  border-radius: 3px;
+  box-shadow: -2px 0 4px rgba(0,0,0,0.3);
+
+  &--vol-up {
+    left: -3px;
+    top: 100px;
+    width: 3px;
+    height: 36px;
+  }
+
+  &--vol-down {
+    left: -3px;
+    top: 148px;
+    width: 3px;
+    height: 36px;
+  }
+
+  &--power {
+    right: -3px;
+    top: 120px;
+    width: 3px;
+    height: 56px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.3);
+  }
+}
+
+// ─── Screen — clips all reel content ─────────────────────────────────────────
+.pr-phone-screen {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  border-radius: 34px;
+  overflow: hidden;
+  background: #000;
+
+  @media (max-width: 480px) {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 30px;
+  }
+}
+
+// ─── Status Bar ───────────────────────────────────────────────────────────────
+.pr-phone-status-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 30;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.pr-phone-time {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.pr-phone-status-icons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+}
+
+// ─── Reel Track — THE ONLY ANIMATED ELEMENT ───────────────────────────────────
+// 4 slides × 100% height each = 400% total track height
+// Animation scrolls up by 75% (3 slides) then loops
+.pr-reel-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  // height = number of reels × 100% of screen
+  height: 400%;
+  animation: reelScroll 16s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+  will-change: transform;
+
+  &.reel-paused {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes reelScroll {
+  0%       { transform: translateY(0); }
+  // Hold reel 1
+  18%      { transform: translateY(0); }
+  // Slide to reel 2
+  25%      { transform: translateY(-25%); }
+  // Hold reel 2
+  43%      { transform: translateY(-25%); }
+  // Slide to reel 3
+  50%      { transform: translateY(-50%); }
+  // Hold reel 3
+  68%      { transform: translateY(-50%); }
+  // Slide to reel 4
+  75%      { transform: translateY(-75%); }
+  // Hold reel 4
+  93%      { transform: translateY(-75%); }
+  // Snap back to reel 1 (instant, hidden by the loop)
+  100%     { transform: translateY(0); }
+}
+
+// ─── Individual Reel Slide ────────────────────────────────────────────────────
+.pr-reel-slide {
+  position: relative;
+  width: 100%;
+  height: 25%; // each slide = 1/4 of track = 100% of screen
+  overflow: hidden;
+
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+// ─── Reel Overlay UI ─────────────────────────────────────────────────────────
+.pr-reel-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px 14px 16px;
+  background: linear-gradient(
+    to bottom,
+    transparent 40%,
+    rgba(0,0,0,0.65) 100%
+  );
+  pointer-events: none;
+}
+
+.pr-reel-overlay-top {
+  display: flex;
+  align-items: flex-start;
+}
+
+.pr-reel-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(79,156,249,0.85);
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+}
+
+.pr-reel-overlay-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pr-reel-caption {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.4;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.pr-reel-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  position: absolute;
+  right: 12px;
+  bottom: 60px;
+}
+
+.pr-reel-action-btn {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+}
+
+// ─── Floating Engagement Badges ───────────────────────────────────────────────
+.pr-reel-badge {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--tz-white);
+  border-radius: 14px;
+  padding: 0.65rem 1rem;
+  box-shadow: 0 8px 32px rgba(15,31,61,0.14), 0 2px 8px rgba(15,31,61,0.08);
+  border: 1px solid var(--tz-border);
+  z-index: 5;
+  animation: badgeFloat 4s ease-in-out infinite;
+
+  &--reach {
+    top: 14%;
+    left: -10px;
+    animation-delay: 0s;
+  }
+
+  &--engage {
+    bottom: 18%;
+    right: -10px;
+    animation-delay: 2s;
+  }
+
+  @media (max-width: 480px) {
+    &--reach { left: 0; }
+    &--engage { right: 0; }
+  }
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+
+.pr-reel-badge-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.pr-reel-badge-num {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--tz-charcoal);
+  line-height: 1;
+}
+
+.pr-reel-badge-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--tz-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 1px;
+}
+
+// ─── Reduced Motion ───────────────────────────────────────────────────────────
+@media (prefers-reduced-motion: reduce) {
+  .pr-reel-track {
+    animation: none !important;
+    transform: translateY(0) !important;
+  }
+
+  .pr-reel-badge {
+    animation: none !important;
+  }
+}
