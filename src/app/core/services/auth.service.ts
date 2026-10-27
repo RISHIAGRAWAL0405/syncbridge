@@ -6,7 +6,7 @@ import { StorageService } from './storage.service';
 import { API_ENDPOINTS } from '../constants/api-endpoints';
 import {
   LoginRequest, ForgotPasswordRequest, ResetPasswordRequest,
-  AuthResponse, ApiResponse
+  AuthResponse, ApiResponse, getAuthUserType
 } from '../models/api.models';
 
 @Injectable({ providedIn: 'root' })
@@ -66,6 +66,6 @@ export class AuthService {
   }
 
   isAdmin(): boolean {
-    return this.getCurrentUser()?.userType === 'ADMIN';
+    return getAuthUserType(this.getCurrentUser()) === 'ADMIN';
   }
 }

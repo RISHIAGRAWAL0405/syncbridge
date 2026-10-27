@@ -52,7 +52,8 @@ export interface AuthUser {
   userName: string;
   firstName: string;
   lastName: string;
-  userType: string;
+  userType?: string;
+  UserType?: string;
   email: string;
   mobile: string;
   isActive: boolean;
@@ -65,6 +66,17 @@ export interface AuthUser {
   is_email_verified: boolean;
   is_mobile_verified: boolean;
   is_active: boolean;
+}
+
+export function getAuthUserType(user: AuthUser | null | undefined): string | undefined {
+  const userType = (user?.userType ?? user?.UserType)?.trim().toUpperCase();
+  if (userType === 'ADMIN' || userType === 'CLIENT') return userType;
+
+  const role = `${user?.userRole?.role_code ?? ''} ${user?.userRole?.role_name ?? ''}`.toUpperCase();
+  if (role.split(/\s+/).includes('ADMIN')) return 'ADMIN';
+  if (role.split(/\s+/).includes('CLIENT')) return 'CLIENT';
+
+  return userType;
 }
 
 export interface AuthResponse {

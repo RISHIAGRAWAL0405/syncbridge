@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, clientGuard, guestGuard } from './core/guards/auth.guard';
+import { adminGuard, clientGuard, guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // Auth routes (public - no website content)
@@ -50,7 +50,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./admin/layout/admin-layout.component').then(m => m.AdminLayoutComponent),
-    canActivate: [authGuard],
+    canActivate: [adminGuard],
     children: [
       {
         path: 'dashboard',

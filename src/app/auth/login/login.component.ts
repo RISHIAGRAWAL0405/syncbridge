@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { getAuthUserType } from '../../core/models/api.models';
 
 @Component({
   selector: 'app-login',
@@ -32,9 +33,11 @@ export class LoginComponent {
       next: res => {
         this.loading = false;
         if (res.statusCode === 200) {
-          const userType = res.data?.user?.userType;
+          const userType = getAuthUserType(res.data?.user);
           if (userType === 'CLIENT') {
             this.router.navigate(['/client/dashboard']);
+          } else if (userType === 'ADMIN') {
+            this.router.navigate(['/admin/dashboard']);
           } else {
             this.router.navigate(['/']);
           }
